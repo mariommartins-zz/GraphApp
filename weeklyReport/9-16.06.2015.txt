@@ -1,0 +1,5 @@
+10.06
+	Preparing Android Environment (Android Studio and SDK)
+	Preparing Git Environment
+	Repository Created (API 16: Android 4.1 (Jelly Bean))
+
