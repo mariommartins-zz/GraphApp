@@ -1,9 +1,9 @@
 public class Vertex {
 	
 	private String name;
-	private Vertex previous;
+	private Vertex previous; //BFS
 	private ArrayList<Edge> incidents;
-	private ArrayList<Vertex> neighbors;
+	private ArrayList<Vertex> neighbors; //BFS and DFS
 	private boolean visited = false;
 	private String color = "white"; //Breadth-First Search (BFS)
 }
