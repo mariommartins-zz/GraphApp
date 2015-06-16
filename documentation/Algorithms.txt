@@ -1,0 +1,27 @@
+1. Kruskal's algorithm
+
+The Kruskal's algorithm, which is an example of a greedy algorithm (always conducting to the choice which seems to be the best at the moment), seeks a minimum spanning tree for a connected graph with weights. This means that it is a subset of edges forming a tree that includes all the vertices, wherein the total weight, given by the sum of the weights of the tree edges, is minimized. If the graph is not connected, then it finds a minimum spanning forest (a minimum spanning tree for each connected component of the graph).
+
+2. Dijkstra's algorithm
+
+The Dijkstra's algorithm is an algorithm also of the "greedy" kind that solves the problem of the shortest path between two vertices in a graph weighted directed or undirected.
+
+3. Breadth-First Search (BFS)
+
+A BFS is a search method that expands and systematically examines all vertices of a graph directed or undirected. The algorithm ensures that no vertex or edge is played more than once. For this, it uses a queue that ensures the analysis order of each vertex. The idea of ??this algorithm is as follows: Given a root, it is analyzed and its direct neighbors are queued. After this, we apply the same steps to the next item of the line, repeating the process until the queue is empty. An analogy well known to demonstrate the operation of the algorithm is painting the vertices of white, gray and black. The vertices in white represent the vertices that have not been marked nor queued, the gray color are the vertices that are in the queue structure and the black color are those who have had queued all its neighboring vertices and marked by algorithm.
+
+4. Depth-First Search (DFS)
+
+The DFS algorithm is used to perform a search or a crossing in a tree, tree structure, or graph. Intuitively, the algorithm starts at a root node (as our case is a graph, the node is previously informed by the user) and explores each of its branches as much as possible. When the end of the way is found he goes back to the previous vertex to assess whether it is possible to continue the search for another of its neighbors. This process is repeated until either the fetched vertex is found, or all of the vertices of the graph are checked.
+
+5. Topological Sorting
+
+The Topological Sorting algorithm is responsible for returning a linear order of the vertices such that the criterion of ordination is that any vertex which is son of another vertex should be in a lower order than its vertex "father". This makes it possible to see that a graph has more than a topological order, as there are vertices that are not related. A great use of this algorithm is to developing a task scheduler, given that there are some tasks that only can be completed if other tasks are completed. If the graph G(V, E) contains cycles, we can not set a topological order.
+
+6. Transitive Closure
+
+The Transitive Closure Algorithm applied to a directed graph will return a new graph with all existent edges and some new edges creating ways between every two vertices of the graph.
+
+7. Floyd–Warshall Algorithm
+
+The Floyd–Warshall Algorithm is used to calculate the distance of the shortest path between all vertices of a graph, two-for-two. The input of this algorithm is a graph G(V, E) and its output is an matrix | V | x | V | that contains the shortest distance between each vertex. In this case, this matrix has the diagonal zeroed, since the distance from one vertex to itself is zero (unless there is a distance to the own vertex in the input graph G).

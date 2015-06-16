@@ -1,0 +1,24 @@
+public class Vertex {
+	
+	private String name;
+	private Vertex previous;
+	private ArrayList<Edge> incidents;
+	private ArrayList<Vertex> neighbors;
+	private boolean visited = false;
+	private String color = "white"; //Breadth-First Search (BFS)
+}
+
+public class Edge {
+
+	private int weight; //Kruskal and Dijkstra's algorithms
+	private Vertex start;
+	private Vertex end;
+	private boolean visited = false;
+}
+
+public class Graph {
+	
+	private ArrayList<Edge> edges;
+	private ArrayList<Vertex> vertices;
+	private boolean hasCycle = false; //Topological Sorting
+}
