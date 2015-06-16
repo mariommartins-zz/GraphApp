@@ -1,0 +1,23 @@
+10.06
+	Preparing Android Environment (Android Studio and SDK)
+	Preparing Git Environment
+	Repository Created
+	Android Project Created (API 16: Android 4.1 (Jelly Bean))
+	First Commit
+
+11.06
+	Graph review
+	Kruskal's algorithm review
+	Dijkstra's algorithm review
+	Breadth-First Search (BFS) review
+
+12.06
+	Depth-First Search (DFS) review
+	Topological Sorting review
+	Transitive Closure review
+	Floyd–Warshall Algorithm review
+
+15.06
+	Classes Atributes Analysis report
+	Class Diagram Draft
+	Second Commit (Class Diagram, Classes Atributes Analysis, 				Review of Algorithms)
