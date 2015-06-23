@@ -1,6 +1,7 @@
 public class Vertex {
 	
 	private String name;
+	private int distance; //Warshall
 	private Vertex previous; //BFS
 	private ArrayList<Edge> incidents;
 	private ArrayList<Vertex> neighbors; //BFS and DFS

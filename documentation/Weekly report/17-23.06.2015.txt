@@ -1,0 +1,24 @@
+17.06
+	New analysis of attributs (attribute distance added in Vertex)
+	Creating Package "Structures" to hold the classes "Edge", "Graph" and "Vertex"
+	Study about Android development (Gradle Concept)
+
+18.06
+	Development of an Android App as exemple ("Login Register")
+
+19.06
+	Classes Vertex and Edge and some of its methods created.
+
+20.06
+	Graph Class Created
+	Start working in the Kruskal Algorithm
+21.06
+	Test Project created (GraphAppTests)
+	Keyboard Class added in the Test Project
+	Test Class created as a main function for tests
+22.06
+	Developing Kruskal Algorithm
+	Testing Kruskal Algorithm
+23.06
+	Third Commit (Structure Package)
+	
