@@ -6,11 +6,38 @@ import java.util.ArrayList;
  * Created by Guto on 19/06/2015.
  */
 
+
 public class Graph {
     private ArrayList<Edge> edges = new ArrayList<Edge>();
     private ArrayList<Vertex> vertices = new ArrayList<Vertex>();
     private boolean cycle = false;
     private boolean directed;
+
+    public void clearLists(){
+        this.edges.clear();
+        this.vertices.clear();
+        this.cycle = false;
+    }
+
+    public ArrayList<Vertex> getVertices() {
+        return this.vertices;
+    }
+
+    public void printTree(){
+        for (int i=0; i<edges.size();i++)
+            System.out.print(this.edges.get(i).getStart().getName() + this.edges.get(i).getEnd().getName() + " - " + this.edges.get(i).getWeight() + " | ");
+        System.out.println();
+    }
+
+    public void cleanVisitedVertex(){
+        for(int i=0; i<this.getVertices().size() ;i++)
+            this.getVertices().get(i).setVisited(false);
+    }
+
+    public void cleanVisitedEdge(){
+        for(int i=0; i<this.getEdges().size() ;i++)
+            this.getEdges().get(i).setVisited(false);
+    }
 
     public ArrayList<Edge> getEdges() {
         return this.edges;
