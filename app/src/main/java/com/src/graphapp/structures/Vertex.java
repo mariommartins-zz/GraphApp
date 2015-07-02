@@ -5,7 +5,8 @@ package com.src.graphapp.structures;
  */
 import java.util.ArrayList;
 
-public class Vertex {
+
+public class Vertex implements Comparable<Vertex> {
     private String name;
     private int distance;
     private Vertex previous;
@@ -14,16 +15,16 @@ public class Vertex {
     private boolean visited = false;
     private String color = "white";
 
+    public Vertex(String name){
+        this.setName(name);
+    }
+
     public String getColor() {
         return color;
     }
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public Vertex(String name){
-        this.setName(name);
     }
 
     public String getName() {
@@ -103,4 +104,14 @@ public class Vertex {
         return s;
     }
 
+    @Override
+    public int compareTo(Vertex vertex) {
+
+        if(this.getDistance() < vertex.getDistance())
+            return -1;
+        else if(this.getDistance() == vertex.getDistance())
+            return 0;
+
+        return 1;
+    }
 }

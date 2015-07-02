@@ -1,74 +1,92 @@
 package com.src.graphapp.structures;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 
 /**
  * Created by Guto on 19/06/2015.
  */
 
-
 public class Graph {
     private ArrayList<Edge> edges = new ArrayList<Edge>();
     private ArrayList<Vertex> vertices = new ArrayList<Vertex>();
     private boolean cycle = false;
-    private boolean directed;
+    private boolean directed = false;
 
-    public void clearLists(){
+    public void clearLists() {
         this.edges.clear();
         this.vertices.clear();
         this.cycle = false;
+    }
+
+    public boolean isDirected() {
+        return directed;
+    }
+
+    public void setDirected(boolean directed) {
+        this.directed = directed;
     }
 
     public ArrayList<Vertex> getVertices() {
         return this.vertices;
     }
 
-    public void printTree(){
-        for (int i=0; i<edges.size();i++)
-            System.out.print(this.edges.get(i).getStart().getName() + this.edges.get(i).getEnd().getName() + " - " + this.edges.get(i).getWeight() + " | ");
+    public void printTree() {
+        for (Edge edge: this.getEdges())
+            System.out.print(edge.getStart().getName()
+                    + edge.getEnd().getName() + " - "
+                    + edge.getWeight() + " | ");
         System.out.println();
     }
 
-    public void cleanVisitedVertex(){
-        for(int i=0; i<this.getVertices().size() ;i++)
-            this.getVertices().get(i).setVisited(false);
+    public void printVertices() {
+        for (int i = 0; i < vertices.size(); i++) {
+            System.out.print("{" + this.vertices.get(i));
+            if (i < vertices.size() - 1)
+                System.out.print(" ,");
+        }
+        System.out.println("}");
     }
 
-    public void cleanVisitedEdge(){
-        for(int i=0; i<this.getEdges().size() ;i++)
-            this.getEdges().get(i).setVisited(false);
+    public void cleanVisitedVertex() {
+        for (Vertex v: this.getVertices())
+            v.setVisited(false);
+    }
+
+    public void cleanVisitedEdge() {
+        for (Edge e: this.getEdges())
+            e.setVisited(false);
     }
 
     public ArrayList<Edge> getEdges() {
         return this.edges;
     }
 
-    public void addEdge(int weight, String start, String end){
-        int i,j,k;
+    public void addEdge(int weight, String start, String end) {
+        int i, j, k;
 
-        //add vertices getting its position
+        // add vertices getting its position
         i = this.addVertex(start);
         j = this.addVertex(end);
 
-        //add edge in the list
-        Edge a = new Edge(weight,
-                this.vertices.get(i),
-                this.vertices.get(j));
+        // add edge in the list
+        Edge a = new Edge(weight, this.vertices.get(i), this.vertices.get(j));
 
         hasCycle(a);
         this.edges.add(a);
         k = this.edges.size();
 
-        //add edge in the list of incident edges of each vertex
-        this.vertices.get(i).addIncidents(this.edges.get(k-1));
-        this.vertices.get(j).addIncidents(this.edges.get(k-1));
+        // add edge in the list of incident edges of each vertex
+        this.vertices.get(i).addIncidents(this.edges.get(k - 1));
+        this.vertices.get(j).addIncidents(this.edges.get(k - 1));
     }
 
-    //add a vertex returning its position
-    public int addVertex(String nome){
-        int i= this.vertexLocation(nome);
+    // add a vertex returning its position
+    public int addVertex(String nome) {
+        int i = this.vertexLocation(nome);
 
-        if(i==this.vertices.size()){
+        if (i == this.vertices.size()) {
             this.vertices.add(new Vertex(nome));
             return (this.vertices.size() - 1);
         }
@@ -76,52 +94,111 @@ public class Graph {
         return i;
     }
 
-    //returns the location of a vertex in the list
-    public int vertexLocation(String nome){
+    // returns the location of a vertex in the list
+    public int vertexLocation(String nome) {
         int i;
 
-        for (i=0; i<this.vertices.size() ; i++)
+        for (i = 0; i < this.vertices.size(); i++)
             if (this.vertices.get(i).getName().equals(nome))
                 return i;
 
-        //if it is not found, returns the list's size
+        // if it is not found, returns the list's size
         return this.vertices.size();
 
     }
 
-    //----------------------KRUSKAL--------------------------------------------
+    public Vertex findVertex(String name) {
+        return this.vertices.get(this.vertexLocation(name));
+    }
 
-    public Graph kruskal(){
+    public Edge findEdge(Vertex vet1, Vertex vet2) {
+        for (Edge e: this.edges) {
+            if (((e.getStart().getName().equals(vet1.getName())) &&
+                    (e.getEnd().getName().equals(vet2.getName()))) ||
+                    ((e.getStart().getName().equals(vet2.getName())) &&
+                            (e.getEnd().getName().equals(vet1.getName())))) {
+                return e;
+            }
+        }
+        return null;
+    }
+
+    public void cleanPreviousVertex() {
+        for (Vertex v: this.getVertices())
+            v.setPrevious(null);
+    }
+
+    public void cleanDistances() {
+        for (Vertex v: this.getVertices())
+            v.setDistance(0);
+    }
+
+    public boolean rightDirection(Edge edge,Vertex vertex){
+
+        if (this.isDirected())
+            if (edge.getStart().getName().equals(vertex.getName()))
+                return true;
+            else
+                return false;
+
+        return true;
+    }
+
+    public ArrayList<Edge> edgeListCreator (ArrayList<Vertex> pathVertex){
+        ArrayList<Edge> pathEdge = new ArrayList<Edge>();
+        Edge edge;
+
+        for (int i = 0; i < pathVertex.size() - 1; i++) {
+            edge = this.findEdge(pathVertex.get(i),
+                    pathVertex.get(i + 1));
+            pathEdge.add(edge);
+        }
+
+        return pathEdge;
+    }
+
+    public Graph graphCreator (ArrayList<Edge> pathEdge){
+        Graph graph = new Graph();
+
+        for (Edge e : pathEdge)
+            graph.addEdge(e.getWeight(), e.getStart().getName(), e.getEnd().getName());
+
+        return graph;
+    }
+
+    // ----------------------KRUSKAL--------------------------------------------
+
+    public Graph kruskal() {
         Edge aux;
         Graph result = new Graph();
 
-        for(int i=0;i<this.getEdges().size();i++){
-            //look for the unvisited edge with the lower weight
-            aux= this.lowerWeight();
-            //if the edge do not create a cycle, it is added to the Kruskal's Tree (or forest)
-            if(!result.hasCycle(aux)){
-                result.addEdge(aux.getWeight(),
-                        aux.getStart().getName(),
-                        aux.getEnd().getName());
+        for (int i = 0; i < this.getEdges().size(); i++) {
+            // look for the unvisited edge with the lower weight
+            aux = this.lowerWeight();
+            // if the edge do not create a cycle, it is added to the Kruskal's
+            // Tree (or forest)
+            if (!result.hasCycle(aux)) {
+                result.addEdge(aux.getWeight(), aux.getStart().getName(), aux
+                        .getEnd().getName());
             }
         }
 
         return result;
     }
 
-    //look for the unvisited edge with the lower weight
-    public Edge lowerWeight(){
+    // look for the unvisited edge with the lower weight
+    public Edge lowerWeight() {
         int j;
 
-        for(j=0; j<this.getEdges().size() ;j++){
-            if((this.getEdges().get(j).isVisited()==false)){
+        for (j = 0; j < this.getEdges().size(); j++) {
+            if ((this.getEdges().get(j).isVisited() == false)) {
                 this.getEdges().get(j).setVisited(true);
 
-                for(int i=(j+1); i<this.getEdges().size() ;i++){
+                for (int i = (j + 1); i < this.getEdges().size(); i++) {
 
-                    if ((this.getEdges().get(i).isVisited()==false) &&
-                            (this.getEdges().get(j).getWeight() > this.getEdges().get(i).getWeight())){
-
+                    if ((this.getEdges().get(i).isVisited() == false)
+                            && (this.getEdges().get(j).getWeight() > this
+                            .getEdges().get(i).getWeight())) {
 
                         this.getEdges().get(j).setVisited(false);
                         j = i;
@@ -136,33 +213,37 @@ public class Graph {
         return this.getEdges().get(j);
     }
 
-    //method that returns whether a certain new edge can create a cycle or not in the current graph
-    public boolean hasCycle(Edge edge){
+    // method that returns whether a certain new edge can create a cycle or not
+    // in the currentVertex graph
+    public boolean hasCycle(Edge edge) {
 
         String start = edge.getStart().getName();
         String end = edge.getEnd().getName();
 
-        for(int j=0; j<this.getEdges().size() ;j++){
+        for (int i = 0; i < this.getEdges().size(); i++) {
 
-            for(int i=0; i<this.getEdges().size() ;i++){
+            for (Edge edge2: this.getEdges()) {
 
-                if (edge!=this.getEdges().get(i)){
+                if (edge != edge2) {
 
-                    if (end.equals(this.getEdges().get(i).getStart().getName())){
+                    if (end.equals(edge2.getStart().getName())) {
 
-                        if	(start.equals(this.getEdges().get(i).getEnd().getName())){
+                        if (start.equals(edge2.getEnd()
+                                .getName())) {
                             this.cycle = true;
                             return true;
-                        }else
-                            end = this.getEdges().get(i).getEnd().getName();
+                        } else
+                            end = edge2.getEnd().getName();
 
-                    }else if (end.equals(this.getEdges().get(i).getEnd().getName())){
+                    } else if (end.equals(edge2.getEnd()
+                            .getName())) {
 
-                        if	(start.equals(this.getEdges().get(i).getStart().getName())){
+                        if (start.equals(edge2.getStart()
+                                .getName())) {
                             this.cycle = true;
                             return true;
-                        }else
-                            end = this.getEdges().get(i).getStart().getName();
+                        } else
+                            end = edge2.getStart().getName();
                     }
                 }
             }
@@ -171,5 +252,153 @@ public class Graph {
         return false;
     }
 
-    //-------------------------------------------------------------------------
+    // ----------------------DIJKSTRA-------------------------------------------
+
+    public Graph dijkstra(String start, String end) {
+
+        Vertex v1 = this.findVertex(start);
+        Vertex v2 = this.findVertex(end);
+
+        // List of Vertices of the found path
+        ArrayList<Vertex> pathVertex = new ArrayList<Vertex>();
+
+        // Vertex that is being verified in the moment
+        Vertex currentVertex;
+
+        // Edge between the Vertices currentVertex and neighbor
+        Edge currentEdge;
+
+        // List of the unvisited vertices in the graph
+        ArrayList<Vertex> unvisited = new ArrayList<Vertex>();
+
+        // Setting initial distances
+        for (Vertex v : this.getVertices()) {
+            // Set the distance of currentVertex to zero, and all others to
+            // 9999(infinite)
+            if (v.getName().equals(v1.getName()))
+                v.setDistance(0);
+            else
+                v.setDistance(9999);
+            // Insert all vertices in the unvisited list
+            unvisited.add(v);
+        }
+        // Organize the unvisited list by the order of distances (the distance 0
+        // will be the first)
+        Collections.sort(unvisited);
+        // Creating a loop to visit all vertices
+        while (!unvisited.isEmpty()) {
+            // Get the vertex with the lower distance (always the first of the
+            // list unvisited)
+            currentVertex = unvisited.get(0);
+			/*
+			 * For each unvisited neighbor of currentVertex, it is been done a
+			 * calculation of its distance from the first vertex on the path.
+			 * This calculation is done by the some of all weights of the
+			 * visited edges in the way from the first vertex to the current
+			 * neighbor If this distance is lower than the distance of its
+			 * neighbor, the distance is updated with the lower one.
+			 */
+
+            for (Vertex neighbor : currentVertex.getNeighbors()) {
+
+                currentEdge = this.findEdge(currentVertex, neighbor);
+
+                // Case the Graph is directed, it checks if the currentVertex is
+                // the Start of the Edge,
+                // if it is not, the edge cannot be inserted on the path.
+
+                if ((!neighbor.isVisited()) && rightDirection(currentEdge,currentVertex)) {
+
+                    // Comparing the distance of neighbor with the distance
+                    // added in the path till the currentVertex
+                    if (neighbor.getDistance() > (currentVertex.getDistance() + currentEdge.getWeight())) {
+
+                        neighbor.setDistance(currentVertex.getDistance()
+                                + currentEdge.getWeight());
+                        neighbor.setPrevious(currentVertex);
+
+						/*
+						 * If neighbor is equal to v2, and there was a change of
+						 * distance, the list with the previous lower path is
+						 * erased, since it is a path lower than this one, that
+						 * is created by the neighbor and its previous vertices
+						 * till v1.
+						 */
+                        if (neighbor == v2) {
+                            pathVertex.clear();
+                            pathVertex.add(neighbor);
+                            while (neighbor.getPrevious() != null) {
+                                pathVertex.add(neighbor.getPrevious());
+                                neighbor = neighbor.getPrevious();
+                            }
+                            Collections.sort(pathVertex);
+                        }
+                    }
+                }
+
+            }
+            // Sets currentVertex as visited and takes it out of the unvisited
+            // list
+            currentVertex.setVisited(true);
+            unvisited.remove(currentVertex);
+
+            Collections.sort(unvisited);
+
+        }
+        // clean the value "Vertex.Distance" and "Vertex.Previous" of each
+        // Vertex in the graph.
+        this.cleanDistances();
+        this.cleanPreviousVertex();
+
+        // Fills the pathEdge list with the existent edges between the vertices
+        // of the pathVertex list (which has the lower path)
+        // Fills a graph with the edges from the pathEdge list to be returned by
+        // the function
+
+        return graphCreator(edgeListCreator(pathVertex));
+    }
+
+    // ------------------BREADTH-FIRST-SEARCH---------------------------------------
+
+    public Graph breadthFirstSearch(String start, String end) {
+
+        ArrayList<Edge> breadthTree = new ArrayList<Edge>();
+        boolean stop = false;
+
+        for (Vertex v : this.vertices) {
+            v.setColor("white");
+        }
+
+        Vertex current = this.findVertex(start);
+        current.setColor("grey");
+
+        LinkedList<Vertex> queue = new LinkedList<Vertex>();
+        queue.add(current);
+
+        while (queue.size() > 0) {
+            current = queue.remove();
+            current.setColor("black");
+
+            if ( current.getName().equals(end) || stop )
+                break;
+
+            for (Vertex neighbor : current.getNeighbors()) {
+                if (neighbor.getColor().equals("white") &&
+                        this.rightDirection(this.findEdge(current, neighbor),current) ) {
+
+                    neighbor.setColor("grey");
+                    queue.add(neighbor);
+                    breadthTree.add(this.findEdge(current, neighbor));
+                    if (neighbor.getName().equals(end)){
+                        stop = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return graphCreator(breadthTree);
+    }
+
+    // -------------------------------------------------------------------------
 }
