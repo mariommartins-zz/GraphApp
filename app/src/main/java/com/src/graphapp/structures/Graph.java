@@ -440,7 +440,7 @@ public class Graph {
         return true;
     }
 
-//------------------ORDENACAO-TOPOLOGICA-----------------------------------
+//------------------TOPOLOGICAL-SORTING-----------------------------------
 
     public void DFS(Vertex v, ArrayList<Vertex> list) {
         v.setVisited(true);
