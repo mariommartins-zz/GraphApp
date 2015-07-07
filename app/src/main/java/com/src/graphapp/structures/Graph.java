@@ -73,7 +73,8 @@ public class Graph {
         // add edge in the list
         Edge a = new Edge(weight, this.vertices.get(i), this.vertices.get(j));
 
-        hasCycle(a);
+        if (!cycle)
+            hasCycle(a);
         this.edges.add(a);
         k = this.edges.size();
 
@@ -360,7 +361,7 @@ public class Graph {
 
     // ------------------BREADTH-FIRST-SEARCH---------------------------------------
 
-    public Graph breadthFirstSearch(String start, String end) {
+    public Graph breadthFirstSearch(String start) {
 
         ArrayList<Edge> breadthTree = new ArrayList<Edge>();
         boolean stop = false;
@@ -379,9 +380,6 @@ public class Graph {
             current = queue.remove();
             current.setColor("black");
 
-            if ( current.getName().equals(end) || stop )
-                break;
-
             for (Vertex neighbor : current.getNeighbors()) {
                 if (neighbor.getColor().equals("white") &&
                         this.rightDirection(this.findEdge(current, neighbor),current) ) {
@@ -389,15 +387,88 @@ public class Graph {
                     neighbor.setColor("grey");
                     queue.add(neighbor);
                     breadthTree.add(this.findEdge(current, neighbor));
-                    if (neighbor.getName().equals(end)){
-                        stop = true;
-                        break;
-                    }
                 }
             }
         }
 
         return graphCreator(breadthTree);
+    }
+
+//------------------DEPTH-FIRST-SEARCH----------------------------------
+
+    //Calls the recursive method of Depth-First Search and returns a Graph with the result
+    public	Graph depthFirstSearch(String start){
+
+        ArrayList<Edge> depthTree = new ArrayList<Edge>();
+
+        this.recursiveSearch(start);
+
+        for (int i=0; i<this.edges.size(); i++){
+            if(this.edges.get(i).isVisited())
+                depthTree.add(this.edges.get(i));
+        }
+
+        return graphCreator(depthTree);
+    }
+
+    //Recursive method that return a boolean as response by the search for a vertex and sets as visited all the vertices and edges on the way.
+    public boolean recursiveSearch(String start){
+
+        int startIndex = this.vertexLocation(start);
+        Edge edge;
+        Vertex vertex;
+
+        this.vertices.get(startIndex).setVisited(true);
+
+
+        for(Vertex v: this.vertices.get(startIndex).getNeighbors()){
+
+            if (!v.isVisited()){
+                //Finds the edge between the vertices start and v.
+                vertex = this.vertices.get(startIndex);
+                edge = this.findEdge(vertex, v);
+                //Sets this edge as visited and keep searching recursively considering if the graph is directed
+                if (isDirected() && this.rightDirection(edge, vertex)){
+                    edge.setVisited(true);
+                    this.recursiveSearch(v.getName());
+                }
+
+
+            }
+        }
+
+        return true;
+    }
+
+//------------------ORDENACAO-TOPOLOGICA-----------------------------------
+
+    public void DFS(Vertex v, ArrayList<Vertex> list) {
+        v.setVisited(true);
+
+        for (Vertex neighbor: v.getNeighbors()) {
+            if(!neighbor.isVisited())
+                DFS(neighbor, list);
+        }
+
+        list.add(v);
+    }
+
+    public ArrayList<Vertex> topologicalSort() {
+        ArrayList<Vertex> order = new ArrayList<Vertex>();
+
+        if(!this.directed){
+            order.add(new Vertex("Not directed"));
+        }else if(this.cycle){
+            order.add(new Vertex("cycle"));
+        }else{
+            for(Vertex v:vertices){
+                if(!v.isVisited())
+                    DFS(v, order);
+            }
+        }
+
+        Collections.reverse(order);
+        return order;
     }
 
     // -------------------------------------------------------------------------
