@@ -24,6 +24,10 @@ public class Graph {
         return directed;
     }
 
+    public void setCycle(boolean cycle) {
+        this.cycle = cycle;
+    }
+
     public void setDirected(boolean directed) {
         this.directed = directed;
     }
@@ -38,6 +42,13 @@ public class Graph {
                     + edge.getEnd().getName() + " - "
                     + edge.getWeight() + " | ");
         System.out.println();
+
+        if(directed)
+            System.out.println("directed");
+        else
+            System.out.println("undirected");
+        if(cycle)
+            System.out.println("cycle");
     }
 
     public void printVertices() {
@@ -75,6 +86,7 @@ public class Graph {
 
         if (!cycle)
             hasCycle(a);
+
         this.edges.add(a);
         k = this.edges.size();
 
@@ -223,31 +235,52 @@ public class Graph {
 
         for (int i = 0; i < this.getEdges().size(); i++) {
 
-            for (Edge edge2: this.getEdges()) {
+            if (this.isDirected()){
 
-                if (edge != edge2) {
+                for (Edge edge2: this.getEdges()) {
 
-                    if (end.equals(edge2.getStart().getName())) {
+                    if (edge != edge2) {
 
-                        if (start.equals(edge2.getEnd()
+                        if (end.equals(edge2.getStart().getName())) {
+
+                            if (start.equals(edge2.getEnd()
+                                    .getName())) {
+                                this.cycle = true;
+                                return true;
+                            } else
+                                end = edge2.getEnd().getName();
+                        }
+                    }
+                }
+            }else{
+
+                for (Edge edge2: this.getEdges()) {
+
+                    if (edge != edge2) {
+
+                        if (end.equals(edge2.getStart().getName())) {
+
+                            if (start.equals(edge2.getEnd()
+                                    .getName())) {
+                                this.cycle = true;
+                                return true;
+                            } else
+                                end = edge2.getEnd().getName();
+
+                        } else if (end.equals(edge2.getEnd()
                                 .getName())) {
-                            this.cycle = true;
-                            return true;
-                        } else
-                            end = edge2.getEnd().getName();
 
-                    } else if (end.equals(edge2.getEnd()
-                            .getName())) {
-
-                        if (start.equals(edge2.getStart()
-                                .getName())) {
-                            this.cycle = true;
-                            return true;
-                        } else
-                            end = edge2.getStart().getName();
+                            if (start.equals(edge2.getStart()
+                                    .getName())) {
+                                this.cycle = true;
+                                return true;
+                            } else
+                                end = edge2.getStart().getName();
+                        }
                     }
                 }
             }
+
         }
         this.cycle = false;
         return false;
@@ -364,7 +397,6 @@ public class Graph {
     public Graph breadthFirstSearch(String start) {
 
         ArrayList<Edge> breadthTree = new ArrayList<Edge>();
-        boolean stop = false;
 
         for (Vertex v : this.vertices) {
             v.setColor("white");
@@ -394,7 +426,7 @@ public class Graph {
         return graphCreator(breadthTree);
     }
 
-//------------------DEPTH-FIRST-SEARCH----------------------------------
+    //------------------DEPTH-FIRST-SEARCH----------------------------------
 
     //Calls the recursive method of Depth-First Search and returns a Graph with the result
     public	Graph depthFirstSearch(String start){
@@ -428,7 +460,7 @@ public class Graph {
                 vertex = this.vertices.get(startIndex);
                 edge = this.findEdge(vertex, v);
                 //Sets this edge as visited and keep searching recursively considering if the graph is directed
-                if (isDirected() && this.rightDirection(edge, vertex)){
+                if (this.rightDirection(edge, vertex)){
                     edge.setVisited(true);
                     this.recursiveSearch(v.getName());
                 }
@@ -440,14 +472,17 @@ public class Graph {
         return true;
     }
 
-//------------------TOPOLOGICAL-SORTING-----------------------------------
+    //------------------TOPOLOGICAL-SORTING-----------------------------------
 
-    public void DFS(Vertex v, ArrayList<Vertex> list) {
+    public void depthFirstTS(Vertex v, ArrayList<Vertex> list) {
+
+        Edge edge;
         v.setVisited(true);
 
         for (Vertex neighbor: v.getNeighbors()) {
-            if(!neighbor.isVisited())
-                DFS(neighbor, list);
+            edge = this.findEdge(v, neighbor);
+            if( !neighbor.isVisited() && this.rightDirection(edge, v) )
+                depthFirstTS(neighbor, list);
         }
 
         list.add(v);
@@ -463,12 +498,99 @@ public class Graph {
         }else{
             for(Vertex v:vertices){
                 if(!v.isVisited())
-                    DFS(v, order);
+                    depthFirstTS(v, order);
             }
         }
 
         Collections.reverse(order);
         return order;
+    }
+
+    //------------------TRANSITIVE-CLOSURE---------------------------------------
+
+    public Graph transitiveClosure (){
+        Graph graph = new Graph();
+
+        for(Edge e : this.edges)
+            graph.addEdge(e.getWeight(), e.getStart().getName(), e.getEnd().getName());
+        graph.setCycle(this.cycle);
+        graph.setDirected(this.directed);
+
+        for(Vertex v1 : this.getVertices()){
+            this.recursiveSearch(v1.getName());
+            for(Vertex v2 : this.getVertices())
+                if (v2.isVisited() &&
+                        !v1.getName().equals(v2.getName()) &&
+                        (graph.findEdge(v1, v2)==null))
+
+                    graph.addEdge(0, v1.getName(), v2.getName());
+            this.cleanVisitedVertex();
+        }
+
+        return graph;
+    }
+
+    //------------------FLOYD-WARSHALL----------------------------------
+
+    public int[][] createGraphMatrix(){
+        int[][] matrix = new int[vertices.size()][vertices.size()];
+
+        for(int i = 0; i < vertices.size(); i++){
+            for(int j = 0; j < vertices.size(); j++){
+                if(i==j){
+                    matrix[i][j] = 0;
+                } else {
+                    Vertex v = vertices.get(i);
+                    Edge e = findEdge(v , vertices.get(j));
+
+                    if(e != null){
+                        matrix[i][j] = e.getWeight();
+                    } else {
+                        matrix[i][j] = 999;//infinity
+                    }
+                }
+            }
+        }
+
+        return matrix;
+    }
+
+    public int[][] floydWarshall(){
+        int n = this.vertices.size();
+
+        int[][] dist = createGraphMatrix();
+        int[][] pred = new int[n][n];
+
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                pred[i][j] = 9;
+
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if(dist[i][j] > dist[i][k] + dist[k][j]) {
+                        dist[i][j] = dist[i][k] + dist[k][j];
+                        pred[i][j] = k;
+                    }
+                }
+            }
+        }
+
+        System.out.print("  ");
+        for(int i = 0; i < pred.length; i++){
+            System.out.print(this.getVertices().get(i));
+        }
+        System.out.println();
+        for(int i = 0; i < pred.length; i++){
+            System.out.print(this.getVertices().get(i) + " ");
+            for(int j = 0; j < pred.length; j++){
+                System.out.print(pred[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+
+        return dist;
     }
 
     // -------------------------------------------------------------------------
