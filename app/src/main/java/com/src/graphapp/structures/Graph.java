@@ -559,36 +559,22 @@ public class Graph {
         int n = this.vertices.size();
 
         int[][] dist = createGraphMatrix();
-        int[][] pred = new int[n][n];
+        int[][] path = new int[n][n];
 
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
-                pred[i][j] = 9;
+                path[i][j] = 9;
 
         for (int k = 0; k < n; k++) {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
                     if(dist[i][j] > dist[i][k] + dist[k][j]) {
                         dist[i][j] = dist[i][k] + dist[k][j];
-                        pred[i][j] = k;
+                        path[i][j] = k;
                     }
                 }
             }
         }
-
-        System.out.print("  ");
-        for(int i = 0; i < pred.length; i++){
-            System.out.print(this.getVertices().get(i));
-        }
-        System.out.println();
-        for(int i = 0; i < pred.length; i++){
-            System.out.print(this.getVertices().get(i) + " ");
-            for(int j = 0; j < pred.length; j++){
-                System.out.print(pred[i][j] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
 
         return dist;
     }
