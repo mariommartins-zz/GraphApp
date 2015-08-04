@@ -3,6 +3,7 @@ package com.src.graphapp.structures;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * Created by Guto on 19/06/2015.
@@ -52,8 +53,9 @@ public class Graph {
     }
 
     public void printVertices() {
+        System.out.print("{");
         for (int i = 0; i < vertices.size(); i++) {
-            System.out.print("{" + this.vertices.get(i));
+            System.out.print(this.vertices.get(i));
             if (i < vertices.size() - 1)
                 System.out.print(" ,");
         }
@@ -74,8 +76,23 @@ public class Graph {
         return this.edges;
     }
 
-    public void addEdge(int weight, String start, String end) {
+    public boolean addEdge(int weight, String start, String end) {
         int i, j, k;
+
+        i=this.vertexLocation(start);
+        j=this.vertexLocation(end);
+
+        //Checking if the Vertices can be inserted (the maximum number of vertices is 10)
+        if(vertices.size()>=9){
+            k=vertices.size();
+            if (i==vertices.size())
+                k++;
+            if (j==vertices.size())
+                k++;
+            if (k>vertices.size())
+                return false;
+        }
+
 
         // add vertices getting its position
         i = this.addVertex(start);
@@ -93,6 +110,8 @@ public class Graph {
         // add edge in the list of incident edges of each vertex
         this.vertices.get(i).addIncidents(this.edges.get(k - 1));
         this.vertices.get(j).addIncidents(this.edges.get(k - 1));
+
+        return true;
     }
 
     // add a vertex returning its position
@@ -105,6 +124,7 @@ public class Graph {
         }
 
         return i;
+
     }
 
     // returns the location of a vertex in the list
@@ -172,11 +192,63 @@ public class Graph {
 
     public Graph graphCreator (ArrayList<Edge> pathEdge){
         Graph graph = new Graph();
+        graph.setDirected(directed);
 
         for (Edge e : pathEdge)
             graph.addEdge(e.getWeight(), e.getStart().getName(), e.getEnd().getName());
 
+
         return graph;
+    }
+
+    public int randomNumber (){
+
+        // getting a Random number by the random function
+        Random rn = new Random();
+        int i = rn.nextInt() + 1;
+
+        // always returning a random int between 3 and 10
+        String o = Long.toString(System.currentTimeMillis() / i);
+        o =  new StringBuilder(o).reverse().toString();
+        char a = (char)o.charAt(0);
+        int b = Character.getNumericValue(a);
+
+        return b;
+    }
+
+    public void randomGraphCreator (){
+        //1 - add vertices
+        //2 - add edges
+        //2.1 - pesos serão num aleatórios
+        //2.2 - a existencia de uma edge entre vertices depende da paridade de um num aleatório
+
+        //Adding Vertices
+        char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        int b = this.randomNumber();
+
+        if (b==0)
+            b=10;
+        else if((b==1)||(b==2))
+            b=3;
+
+        for(int i=0;i<=b; i++){
+            this.addVertex(new StringBuilder().append(alphabet[i]).toString());
+        }
+        this.printVertices();
+        //Adding Edges
+
+        for(Vertex v1: vertices)
+            for(Vertex v2: vertices)
+                if (!v1.getName().equals(v2.getName())){
+                    Edge edge = this.findEdge(v1, v2);
+                    //if the random value is even and the edge doesn't exist, a edge will be added
+                    if ((this.randomNumber() %2 == 0)
+                            && ((edge==null) || !(this.rightDirection(edge, v1)))){
+
+                        this.addEdge(this.randomNumber(), v1.getName(), v2.getName());
+                    }
+                }
+        this.printTree();
     }
 
     // ----------------------KRUSKAL--------------------------------------------
@@ -184,6 +256,7 @@ public class Graph {
     public Graph kruskal() {
         Edge aux;
         Graph result = new Graph();
+        result.setDirected(directed);
 
         for (int i = 0; i < this.getEdges().size(); i++) {
             // look for the unvisited edge with the lower weight
@@ -444,7 +517,7 @@ public class Graph {
     }
 
     //Recursive method that return a boolean as response by the search for a vertex and sets as visited all the vertices and edges on the way.
-    public boolean recursiveSearch(String start){
+    public void recursiveSearch(String start){
 
         int startIndex = this.vertexLocation(start);
         Edge edge;
@@ -468,8 +541,6 @@ public class Graph {
 
             }
         }
-
-        return true;
     }
 
     //------------------TOPOLOGICAL-SORTING-----------------------------------
@@ -510,20 +581,24 @@ public class Graph {
 
     public Graph transitiveClosure (){
         Graph graph = new Graph();
+        int[][] weightsFW = this.floydWarshall();
+        int weight;
 
-        for(Edge e : this.edges)
-            graph.addEdge(e.getWeight(), e.getStart().getName(), e.getEnd().getName());
-        graph.setCycle(this.cycle);
-        graph.setDirected(this.directed);
+        graph = this.graphCreator(this.edges);
 
         for(Vertex v1 : this.getVertices()){
             this.recursiveSearch(v1.getName());
-            for(Vertex v2 : this.getVertices())
-                if (v2.isVisited() &&
-                        !v1.getName().equals(v2.getName()) &&
-                        (graph.findEdge(v1, v2)==null))
+            for(Vertex v2 : this.getVertices()){
+                Edge edge = graph.findEdge(v1, v2);
+                if (v2.isVisited()
+                        && !(v1.getName().equals(v2.getName()))
+                        && ((edge==null) || !(this.rightDirection(edge, v1)))){
+                    weight = weightsFW[vertexLocation(v1.getName())][vertexLocation(v2.getName())];
+                    graph.addEdge(weight, v1.getName(), v2.getName());
+                }
+            }
+            //GUTOSSAURO DELICIA DA JAC
 
-                    graph.addEdge(0, v1.getName(), v2.getName());
             this.cleanVisitedVertex();
         }
 
@@ -543,7 +618,7 @@ public class Graph {
                     Vertex v = vertices.get(i);
                     Edge e = findEdge(v , vertices.get(j));
 
-                    if(e != null){
+                    if((e != null)&&this.rightDirection(e, v)){
                         matrix[i][j] = e.getWeight();
                     } else {
                         matrix[i][j] = 999;//infinity
@@ -559,22 +634,36 @@ public class Graph {
         int n = this.vertices.size();
 
         int[][] dist = createGraphMatrix();
-        int[][] path = new int[n][n];
+        int[][] pred = new int[n][n];
 
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
-                path[i][j] = 9;
+                pred[i][j] = 9;
 
         for (int k = 0; k < n; k++) {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
                     if(dist[i][j] > dist[i][k] + dist[k][j]) {
                         dist[i][j] = dist[i][k] + dist[k][j];
-                        path[i][j] = k;
+                        pred[i][j] = k;
                     }
                 }
             }
         }
+
+    	/*System.out.print("  ");
+		for(int i = 0; i < pred.length; i++){
+			System.out.print(this.getVertices().get(i));
+		}
+		System.out.println();
+		for(int i = 0; i < pred.length; i++){
+			System.out.print(this.getVertices().get(i) + " ");
+			for(int j = 0; j < pred.length; j++){
+				System.out.print(pred[i][j] + " ");
+			}
+			System.out.println();
+		}
+		System.out.println();*/
 
         return dist;
     }
