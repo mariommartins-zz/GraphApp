@@ -595,7 +595,7 @@ public class Graph {
                         && ((edge==null) || !(this.rightDirection(edge, v1)))){
                     weight = weightsFW[vertexLocation(v1.getName())][vertexLocation(v2.getName())];
                     graph.addEdge(weight, v1.getName(), v2.getName());
-                }
+                } //FIX THE DIRECTION ISSUE
             }
             //GUTOSSAURO DELICIA DA JAC
 
