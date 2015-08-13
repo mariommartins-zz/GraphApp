@@ -1,39 +1,38 @@
 package com.src.graphapp;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+public class VertexActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+    Button bHelp, bInsert;
 
-    Button bNext,bHelp;
-
-    String help = "Select if you want to have a directed graph or/and a random graph. Tap just the NEXT button for none of these.";
+    String help = "Put the Vertex's Name in the given space and tap Insert to complete the operation. Tap the Android's back button to return to the last view";
+    String insertionOK = "Vertex insertion Completed! ";
+    String insertionERROR = "Maximum number of Vertices reach (10). Vertex not inserted! ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_vertex);
 
-        bNext = (Button)findViewById(R.id.bNext);
         bHelp = (Button)findViewById(R.id.bHelp);
+        bInsert = (Button)findViewById(R.id.bInsert);
 
         bHelp.setOnClickListener(this);
-        bNext.setOnClickListener(this);
+        bInsert.setOnClickListener(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_vertex, menu);
         return true;
     }
 
@@ -55,11 +54,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.bNext:
-                startActivity (new Intent(this, MenuActivity.class));
-                break;
             case R.id.bHelp:
-                Toast.makeText(MainActivity.this, help, Toast.LENGTH_LONG).show();
+                Toast.makeText(VertexActivity.this, help, Toast.LENGTH_LONG).show();
+                break;
+            case R.id.bInsert:
+                Toast.makeText(VertexActivity.this, insertionOK, Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getApplicationContext(),MenuActivity.class));
                 break;
         }
     }

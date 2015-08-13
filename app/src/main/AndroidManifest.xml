@@ -16,6 +16,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MenuActivity"
+            android:label="@string/title_activity_menu" >
+        </activity>
+        <activity
+            android:name=".EdgeActivity"
+            android:label="@string/title_activity_edge" >
+        </activity>
+        <activity
+            android:name=".VertexActivity"
+            android:label="@string/title_activity_vertex" >
+        </activity>
+        <activity
+            android:name=".DescriptionActivity"
+            android:label="@string/title_activity_description" >
+        </activity>
+        <activity
+            android:name=".GraphActivity"
+            android:label="@string/title_activity_graph" >
+        </activity>
+        <activity
+            android:name=".TopSortActivity"
+            android:label="@string/title_activity_top_sort" >
+        </activity>
+        <activity
+            android:name=".WarshallActivity"
+            android:label="@string/title_activity_warshall" >
+        </activity>
     </application>
 
 </manifest>

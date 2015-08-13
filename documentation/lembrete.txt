@@ -1,0 +1,7 @@
+//LEMBRAR DO TOAST PRA AJUDAR NOS AVISOS
+    //Toast.makeText(getBaseContext(), item, Toast.LENGTH_LONG).show();
+
+
+colocar explicação na mainActivity
+
+avisar sobre maximum lenght nas entradas de texto

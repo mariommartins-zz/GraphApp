@@ -1,39 +1,37 @@
 package com.src.graphapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+public class GraphActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+    Button bDescription, bHelp;
 
-    Button bNext,bHelp;
-
-    String help = "Select if you want to have a directed graph or/and a random graph. Tap just the NEXT button for none of these.";
+    String help = "Tap the DESCRIPTION button for details about the algorithm. Tap the Android's back button to return to the last view";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_graph);
 
-        bNext = (Button)findViewById(R.id.bNext);
+        bDescription = (Button)findViewById(R.id.bDescription);
         bHelp = (Button)findViewById(R.id.bHelp);
 
         bHelp.setOnClickListener(this);
-        bNext.setOnClickListener(this);
+        bDescription.setOnClickListener(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_graph, menu);
         return true;
     }
 
@@ -55,11 +53,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.bNext:
-                startActivity (new Intent(this, MenuActivity.class));
+            case R.id.bDescription:
+                startActivity (new Intent(this, DescriptionActivity.class));
                 break;
             case R.id.bHelp:
-                Toast.makeText(MainActivity.this, help, Toast.LENGTH_LONG).show();
+                Toast.makeText(GraphActivity.this, help, Toast.LENGTH_LONG).show();
                 break;
         }
     }

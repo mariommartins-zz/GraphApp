@@ -28,8 +28,9 @@
             android:layout_width="match_parent"
             android:background="@drawable/background"
             android:orientation="horizontal">
+
             <TextView
-                android:text="@string/app_name"
+                android:id="@+id/tvTitle"
                 android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
@@ -50,59 +51,73 @@
                 android:text="help"
                 android:background="@color/accent_material_light"
                 android:id="@+id/bHelp" />
+
         </LinearLayout>
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/features"
-        android:paddingTop="20dp"
-        android:paddingLeft="20dp"
-        android:textSize="25dp"/>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingBottom="20dp"
         android:orientation="vertical" >
 
-        <RadioButton
-            android:id="@+id/rbDirected"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:text="@string/directed_graph"
-            android:layout_gravity="center_horizontal" />
-        <RadioButton
-            android:id="@+id/rbRandom"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:paddingLeft="20dp"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/description"
+                android:paddingTop="20dp"
+                android:textSize="25dp"/>
+
+            <TextView
+                android:layout_width="310dp"
+                android:layout_height="150dp"
+                android:background="@drawable/border"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:padding="5dp"
+                android:text="Large Text"
+                android:id="@+id/tvDescription"
+                android:layout_weight="7.97" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:text="@string/random_graph"
-            android:layout_gravity="center_horizontal" />
+            android:layout_weight="1"
+            android:gravity="left"
+            android:paddingLeft="20dp"
+            android:orientation="vertical"
+            android:weightSum="1">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/complexity"
+                android:paddingTop="20dp"
+                android:textSize="25dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:paddingBottom="20dp"
-        android:gravity="center|top"
-        android:orientation="vertical" >
+            <TextView
+                android:layout_width="310dp"
+                android:layout_height="150dp"
+                android:background="@drawable/border"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:padding="5dp"
+                android:text="Large Text"
+                android:id="@+id/tvComplexity"
+                android:layout_weight="7.97" />
 
-        <Button
-            android:id="@+id/bNext"
-            android:text="@string/next"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        </LinearLayout>
 
     </LinearLayout>
 
