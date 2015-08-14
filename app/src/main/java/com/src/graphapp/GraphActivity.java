@@ -8,24 +8,39 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.src.graphapp.texts.TextsEN;
 
 public class GraphActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button bDescription, bHelp;
+    TextView tvTitle;
 
-    String help = "Tap the DESCRIPTION button for details about the algorithm. Tap the Android's back button to return to the last view";
+    String title, description, complexity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
-        bDescription = (Button)findViewById(R.id.bDescription);
-        bHelp = (Button)findViewById(R.id.bHelp);
+        Intent i1 = getIntent();
+        title = i1.getStringExtra("title");
+        description = i1.getStringExtra("description");
+        complexity = i1.getStringExtra("complexity");
 
+        bDescription = (Button)findViewById(R.id.bDescription);
+        if (description.equals("hide"))
+            bDescription.setEnabled(false);
+        else
+            bDescription.setOnClickListener(this);
+
+        bHelp = (Button)findViewById(R.id.bHelp);
+        tvTitle = (TextView)findViewById(R.id.tvTitle);
+
+        tvTitle.setText(title);
         bHelp.setOnClickListener(this);
-        bDescription.setOnClickListener(this);
     }
 
     @Override
@@ -54,10 +69,14 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bDescription:
-                startActivity (new Intent(this, DescriptionActivity.class));
+                Intent i2 = new Intent(getApplicationContext(), DescriptionActivity.class);
+                i2.putExtra("title",title);
+                i2.putExtra("description",description);
+                i2.putExtra("complexity",complexity);
+                startActivity (i2);
                 break;
             case R.id.bHelp:
-                Toast.makeText(GraphActivity.this, help, Toast.LENGTH_LONG).show();
+                Toast.makeText(GraphActivity.this, TextsEN.getHelpByPosition(4), Toast.LENGTH_LONG).show();
                 break;
         }
     }

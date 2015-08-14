@@ -11,12 +11,12 @@ import android.widget.Button;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.src.graphapp.texts.TextsEN;
+
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
     Button bNext,bHelp;
-
-    String help = "Select if you want to have a directed graph or/and a random graph. Tap just the NEXT button for none of these.";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 startActivity (new Intent(this, MenuActivity.class));
                 break;
             case R.id.bHelp:
-                Toast.makeText(MainActivity.this, help, Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, TextsEN.getHelpByPosition(0), Toast.LENGTH_LONG).show();
                 break;
         }
     }

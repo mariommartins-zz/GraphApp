@@ -9,13 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.src.graphapp.texts.TextsEN;
+
 public class EdgeActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button bHelp, bInsert;
-
-    String help = "Put the Edge's Weight,Start and End in the given spaces and tap Insert to complete the operation. Tap the Android's back button to return to the last view";
-    String insertionOK = "Edge insertion Completed! ";
-    String insertionERROR = "Maximum number of Vertices reach (10). Edge not inserted! ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +53,10 @@ public class EdgeActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bHelp:
-                Toast.makeText(EdgeActivity.this, help, Toast.LENGTH_LONG).show();
+                Toast.makeText(EdgeActivity.this, TextsEN.getHelpByPosition(3), Toast.LENGTH_LONG).show();
                 break;
             case R.id.bInsert:
-                Toast.makeText(EdgeActivity.this, insertionOK, Toast.LENGTH_LONG).show();
+                Toast.makeText(EdgeActivity.this, TextsEN.getInsertionByPosition(2), Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getApplicationContext(), MenuActivity.class));
                 break;
         }

@@ -145,15 +145,21 @@ public class Graph {
     }
 
     public Edge findEdge(Vertex vet1, Vertex vet2) {
-        for (Edge e: this.edges) {
-            if (((e.getStart().getName().equals(vet1.getName())) &&
-                    (e.getEnd().getName().equals(vet2.getName()))) ||
-                    ((e.getStart().getName().equals(vet2.getName())) &&
-                            (e.getEnd().getName().equals(vet1.getName())))) {
-                return e;
-            }
+        if (directed){
+            for (Edge e: this.edges)
+                if (((e.getStart().getName().equals(vet1.getName())) &&
+                        (e.getEnd().getName().equals(vet2.getName()))))
+                    return e;
+        }else{
+            for (Edge e: this.edges)
+                if (((e.getStart().getName().equals(vet1.getName())) &&
+                        (e.getEnd().getName().equals(vet2.getName()))) ||
+                        ((e.getStart().getName().equals(vet2.getName())) &&
+                                (e.getEnd().getName().equals(vet1.getName()))))
+                    return e;
         }
         return null;
+
     }
 
     public void cleanPreviousVertex() {
@@ -164,17 +170,6 @@ public class Graph {
     public void cleanDistances() {
         for (Vertex v: this.getVertices())
             v.setDistance(0);
-    }
-
-    public boolean rightDirection(Edge edge,Vertex vertex){
-
-        if (this.isDirected())
-            if (edge.getStart().getName().equals(vertex.getName()))
-                return true;
-            else
-                return false;
-
-        return true;
     }
 
     public ArrayList<Edge> edgeListCreator (ArrayList<Vertex> pathVertex){
@@ -242,8 +237,7 @@ public class Graph {
                 if (!v1.getName().equals(v2.getName())){
                     Edge edge = this.findEdge(v1, v2);
                     //if the random value is even and the edge doesn't exist, a edge will be added
-                    if ((this.randomNumber() %2 == 0)
-                            && ((edge==null) || !(this.rightDirection(edge, v1)))){
+                    if ((this.randomNumber() %2 == 0) && (edge==null)){
 
                         this.addEdge(this.randomNumber(), v1.getName(), v2.getName());
                     }
@@ -414,7 +408,7 @@ public class Graph {
                 // the Start of the Edge,
                 // if it is not, the edge cannot be inserted on the path.
 
-                if ((!neighbor.isVisited()) && rightDirection(currentEdge,currentVertex)) {
+                if ((!neighbor.isVisited()) && (currentEdge != null)) {
 
                     // Comparing the distance of neighbor with the distance
                     // added in the path till the currentVertex
@@ -486,12 +480,13 @@ public class Graph {
             current.setColor("black");
 
             for (Vertex neighbor : current.getNeighbors()) {
+                Edge edge = this.findEdge(current, neighbor);
                 if (neighbor.getColor().equals("white") &&
-                        this.rightDirection(this.findEdge(current, neighbor),current) ) {
+                        (edge != null) ) {
 
                     neighbor.setColor("grey");
                     queue.add(neighbor);
-                    breadthTree.add(this.findEdge(current, neighbor));
+                    breadthTree.add(edge);
                 }
             }
         }
@@ -533,7 +528,7 @@ public class Graph {
                 vertex = this.vertices.get(startIndex);
                 edge = this.findEdge(vertex, v);
                 //Sets this edge as visited and keep searching recursively considering if the graph is directed
-                if (this.rightDirection(edge, vertex)){
+                if (edge != null){
                     edge.setVisited(true);
                     this.recursiveSearch(v.getName());
                 }
@@ -552,7 +547,7 @@ public class Graph {
 
         for (Vertex neighbor: v.getNeighbors()) {
             edge = this.findEdge(v, neighbor);
-            if( !neighbor.isVisited() && this.rightDirection(edge, v) )
+            if( !neighbor.isVisited() && (edge != null) )
                 depthFirstTS(neighbor, list);
         }
 
@@ -592,10 +587,10 @@ public class Graph {
                 Edge edge = graph.findEdge(v1, v2);
                 if (v2.isVisited()
                         && !(v1.getName().equals(v2.getName()))
-                        && ((edge==null) || !(this.rightDirection(edge, v1)))){
+                        && (edge==null) ){
                     weight = weightsFW[vertexLocation(v1.getName())][vertexLocation(v2.getName())];
                     graph.addEdge(weight, v1.getName(), v2.getName());
-                } //FIX THE DIRECTION ISSUE
+                }
             }
             //GUTOSSAURO DELICIA DA JAC
 
@@ -618,7 +613,7 @@ public class Graph {
                     Vertex v = vertices.get(i);
                     Edge e = findEdge(v , vertices.get(j));
 
-                    if((e != null)&&this.rightDirection(e, v)){
+                    if(e != null){
                         matrix[i][j] = e.getWeight();
                     } else {
                         matrix[i][j] = 999;//infinity

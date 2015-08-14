@@ -7,21 +7,30 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.src.graphapp.texts.TextsEN;
 
 public class DescriptionActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button bHelp;
-
-    String help = "Tap the Android's back button to return to the last view";
+    TextView tvTitle, tvDescription, tvComplexity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_description);
 
+        Intent i = getIntent();
         bHelp = (Button)findViewById(R.id.bHelp);
+        tvTitle = (TextView)findViewById(R.id.tvTitle);
+        tvDescription = (TextView)findViewById(R.id.tvDescription);
+        tvComplexity = (TextView)findViewById(R.id.tvComplexity);
 
+        tvComplexity.setText(i.getStringExtra("complexity"));
+        tvDescription.setText(i.getStringExtra("description"));
+        tvTitle.setText(i.getStringExtra("title"));
         bHelp.setOnClickListener(this);
     }
 
@@ -51,7 +60,7 @@ public class DescriptionActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bHelp:
-                Toast.makeText(DescriptionActivity.this, help, Toast.LENGTH_LONG).show();
+                Toast.makeText(DescriptionActivity.this, TextsEN.getHelpByPosition(5), Toast.LENGTH_LONG).show();
                 break;
         }
     }

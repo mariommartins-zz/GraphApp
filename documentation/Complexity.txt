@@ -1,0 +1,37 @@
+1. Kruskal's algorithm
+
+The complexity of the Kruskal algorithm is given as follows:
+In a graph with 'n' nodes and 'a' edges, the number of operations is:
+(i) O(log a) to order the edges, which is equivalent to O(log n);
+(ii) O(n) to initialize the different sets of each connected component;
+(iii) In the worst case, O((2a+n-1)*lg n) to determine and mix related components;
+(iv) The (a) for the remaining operations.
+It follows that the total time for the Kruskal algorithm is O(log n)
+
+2. Dijkstra's algorithm
+
+If | V | is the number of vertices and |E| the number of edges, so:
+(i) Initialization: T (V);
+(ii) Cycle "while" runs |V| times;
+(ii.1) All graph arcs are visited, vertices and edges;
+Total = O (V lg V + E lg V) = O ((V+E)lg V).
+
+3. Breadth-First Search (BFS)
+
+Given a graph G (V,E) where V is the set of vertices and E the set of edges of the graph, in the worst case the algorithm represents a cost of O(|V|+|E|), where |E| means the total of all edges, and |V| means the number of vertices. The characteristic worst case occurs when the algorithm goes through all the vertices and all edges of the graph. One must realize that |V| represents the operations performed on the vertices, which is always constant (usually an operation that checks whether it is the sought vertex, mark as visited and dequeue) for each vertex, and |E| represents the operations carried out in each edge (usually the operation of picking up the neighbor's edge "a" of the graph).
+
+4. Depth-First Search (DFS)
+
+The space complexity of the search algorithm is much smaller in DFS than that in BFS. The temporal complexity is unique since it is proportional to the number of vertices plus the number of edges of the graph they traverse. However, when there are searches in very large graphs, the DFS can not finish because the operation of remember what were visited not work for lack of memory space. Analyzing this complexity, it is possible to see that the total cost of this algorithm is O(V+E), where V is the number of vertices and E the number of edges, that is, the same complexity of BFS.
+
+5. Topological Sorting
+
+The complexity of the topological sort algorithm is given by the complexity of the DFS which is O(|V|+|E|) as explained above. In the case of our implementation, we have O(|V|+|E|) to the DFS method and O(|V|) to the operation of reversing the order of the list. with this the complexity is O(|V|+|E|) + O(|V|).
+
+6. Transitive Closure
+
+The complexity is O(n³) because there is three repetition structure involved in the algorithm for interacting with the vertices that have paths with each other.
+
+7. Floyd–Warshall Algorithm
+
+The time complexity of the Warshall algorithm is defined by the 3 loops that pass through all the vertices. In this case, the complexity of this algorithm is O(n³). The algorithm is simple but practical in some mid-size entries.

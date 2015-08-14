@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
         android:layout_width="match_parent"
@@ -21,8 +20,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp" />
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <LinearLayout
             android:layout_height="wrap_content"
             android:paddingBottom="3dp"
             android:layout_width="match_parent"
@@ -36,7 +34,7 @@
                 android:paddingLeft="10dp"
                 android:paddingTop="9dp"
                 android:paddingBottom="7dp"
-                android:textSize="28dp"
+                android:textSize="25dp"
                 android:background="@color/accent_material_light"/>
 
             <Button
@@ -56,50 +54,53 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingBottom="20dp"
-        android:orientation="vertical" >
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="340dp"
-            android:layout_height="260dp"
-            android:gravity="left"
-            android:orientation="vertical"
-            android:weightSum="1">
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingBottom="20dp"
+            android:orientation="vertical" >
 
-            <ListView
-                android:layout_width="wrap_content"
-                android:layout_height="250dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:background="@drawable/border"
-                android:id="@+id/lvTopSort" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:paddingBottom="20dp"
+                android:orientation="vertical"
+                android:weightSum="1">
 
+                <ListView
+                    android:layout_width="wrap_content"
+                    android:layout_height="250dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:background="@drawable/border"
+                    android:id="@+id/lvTopSort" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center|top"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/bDescription"
+                    android:text="@string/description"
+                    android:textSize="20dp"
+                    android:gravity="center"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
         </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:paddingBottom="20dp"
-        android:gravity="center|top"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/bDescription"
-            android:text="@string/description"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
+    </ScrollView>
 
 </LinearLayout>

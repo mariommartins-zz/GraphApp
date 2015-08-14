@@ -13,17 +13,23 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.src.graphapp.texts.TextsEN;
+
 public class TopSortActivity extends Activity implements View.OnClickListener {
 
     ListView lvTopSort;
     Button bDescription, bHelp;
-
-    String help = "Tap the DESCRIPTION button for details about the algorithm. Tap the Android's back button to return to the last view";
+    String title, description, complexity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_sort);
+
+        Intent i1 = getIntent();
+        title = i1.getStringExtra("title");
+        description = i1.getStringExtra("description");
+        complexity = i1.getStringExtra("complexity");
 
         lvTopSort = (ListView) findViewById(R.id.lvTopSort);
         bHelp = (Button)findViewById(R.id.bHelp);
@@ -65,10 +71,14 @@ public class TopSortActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bDescription:
-                startActivity (new Intent(this, DescriptionActivity.class));
+                Intent i2 = new Intent(getApplicationContext(), DescriptionActivity.class);
+                i2.putExtra("title",title);
+                i2.putExtra("description",description);
+                i2.putExtra("complexity",complexity);
+                startActivity (i2);
                 break;
             case R.id.bHelp:
-                Toast.makeText(TopSortActivity.this, help, Toast.LENGTH_LONG).show();
+                Toast.makeText(TopSortActivity.this, TextsEN.getHelpByPosition(4), Toast.LENGTH_LONG).show();
                 break;
         }
     }

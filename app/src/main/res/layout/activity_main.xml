@@ -35,7 +35,7 @@
                 android:paddingLeft="10dp"
                 android:paddingTop="9dp"
                 android:paddingBottom="7dp"
-                android:textSize="28dp"
+                android:textSize="25dp"
                 android:background="@color/accent_material_light"/>
 
             <Button
