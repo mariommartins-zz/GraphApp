@@ -1,9 +1,7 @@
-package com.src.graphapp;
+package com.src.graphapp.activities;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +11,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.src.graphapp.R;
 import com.src.graphapp.texts.TextsEN;
 
 public class TopSortActivity extends Activity implements View.OnClickListener {
@@ -74,12 +73,17 @@ public class TopSortActivity extends Activity implements View.OnClickListener {
                 Intent i2 = new Intent(getApplicationContext(), DescriptionActivity.class);
                 i2.putExtra("title",title);
                 i2.putExtra("description",description);
-                i2.putExtra("complexity",complexity);
+                i2.putExtra("complexity", complexity);
                 startActivity (i2);
                 break;
             case R.id.bHelp:
                 Toast.makeText(TopSortActivity.this, TextsEN.getHelpByPosition(4), Toast.LENGTH_LONG).show();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

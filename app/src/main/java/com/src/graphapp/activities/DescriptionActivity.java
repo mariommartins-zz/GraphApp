@@ -1,39 +1,44 @@
-package com.src.graphapp;
+package com.src.graphapp.activities;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.src.graphapp.R;
 import com.src.graphapp.texts.TextsEN;
 
+public class DescriptionActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener {
-
-    Button bNext,bHelp;
+    Button bHelp;
+    TextView tvTitle, tvDescription, tvComplexity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_description);
 
-        bNext = (Button)findViewById(R.id.bNext);
+        Intent i = getIntent();
         bHelp = (Button)findViewById(R.id.bHelp);
+        tvTitle = (TextView)findViewById(R.id.tvTitle);
+        tvDescription = (TextView)findViewById(R.id.tvDescription);
+        tvComplexity = (TextView)findViewById(R.id.tvComplexity);
 
+        tvComplexity.setText(i.getStringExtra("complexity"));
+        tvDescription.setText(i.getStringExtra("description"));
+        tvTitle.setText(i.getStringExtra("title"));
         bHelp.setOnClickListener(this);
-        bNext.setOnClickListener(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_description, menu);
         return true;
     }
 
@@ -55,12 +60,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.bNext:
-                startActivity (new Intent(this, MenuActivity.class));
-                break;
             case R.id.bHelp:
-                Toast.makeText(MainActivity.this, TextsEN.getHelpByPosition(0), Toast.LENGTH_LONG).show();
+                Toast.makeText(DescriptionActivity.this, TextsEN.getHelpByPosition(5), Toast.LENGTH_LONG).show();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

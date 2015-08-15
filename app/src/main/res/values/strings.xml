@@ -34,4 +34,5 @@
     <string name="complexity">Complexity</string>
     <string name="error">ERROR</string>
     <string name="help">HELP</string>
+    <string name="title_activity_input">InputActivity</string>
 </resources>

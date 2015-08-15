@@ -79,7 +79,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:padding="5dp"
                 android:textSize="10dp"
-                android:id="@+id/TVdescription"
+                android:id="@+id/tvGraph"
                 android:layout_weight="7.97" />
 
         </LinearLayout>

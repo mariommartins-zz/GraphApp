@@ -1,6 +1,5 @@
-package com.src.graphapp;
+package com.src.graphapp.activities;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,12 +10,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.src.graphapp.R;
 import com.src.graphapp.texts.TextsEN;
 
 public class GraphActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button bDescription, bHelp;
-    TextView tvTitle;
+    TextView tvTitle, tvGraph;
 
     String title, description, complexity;
 
@@ -38,7 +38,9 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
 
         bHelp = (Button)findViewById(R.id.bHelp);
         tvTitle = (TextView)findViewById(R.id.tvTitle);
+        tvGraph = (TextView)findViewById(R.id.tvGraph);
 
+        tvGraph.setText(i1.getStringExtra("graph"));
         tvTitle.setText(title);
         bHelp.setOnClickListener(this);
     }
@@ -79,5 +81,10 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                 Toast.makeText(GraphActivity.this, TextsEN.getHelpByPosition(4), Toast.LENGTH_LONG).show();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

@@ -15,23 +15,37 @@ public class TextsEN {
             "Depth-First Search",
             "Topological Sorting",
             "Transitive Closure",
-            "Floyd–Warshall"
+            "Floyd–Warshall",
+            "RESTART EMULATOR"
     };
 
     final static String[] insertion = {
             "Vertex insertion Completed!",
-            "Maximum number of Vertices reach (10). Vertex not inserted!",
             "Edge insertion Completed!",
-            "Maximum number of Vertices reach (10). Edge not inserted!"
+    };
+
+    final static String[] error = {
+            "ERROR" +
+                    "\nYou cannot add a new vertex, the maximum number is 10.",
+            "ERROR" +
+                    "\nIt is not allowed edges from a vertex to itself.",
+            "ERROR" +
+                    "\nThis Edge already exists.",
     };
 
     final static String[] help = {
-            "Select if you want to have a directed graph or/and a random graph. Tap just the NEXT button for none of these.",
-            "Tap the option you would like to use in the list",
-            "Put the Vertex's Name in the given space and tap Insert to complete the operation. Tap the Android's back button to return to the last view",
-            "Put the Edge's Weight,Start and End in the given spaces and tap Insert to complete the operation. Tap the Android's back button to return to the last view",
-            "Tap the DESCRIPTION button for details about the algorithm. Tap the Android's back button to return to the last view",
-            "Tap the Android's back button to return to the last view"
+            "Select if you want to have a directed graph or/and a random graph.\n" +
+                    "Tap just the NEXT button for none of these.",
+            "Tap the option you would like to use in the list.\n" +
+                    "Select the last item to restart the app.\n" +
+                    "Tap twice the back button to close the app.",
+            "Put the Vertex's Name in the given space and tap Insert to complete the operation.\n" +
+                    "Tap the back button to return to the last view",
+            "Put the Edge's Weight,Start and End in the given spaces and tap Insert to complete the operation.\n" +
+                    "Tap the back button to return to the last view",
+            "Tap the DESCRIPTION button for details about the algorithm.\n" +
+                    "Tap the back button to return to the last view",
+            "Tap the back button to return to the last view"
     };
 
     final static String[] description = {"The Kruskal's algorithm, which is an example of a greedy algorithm (always conducting to the choice which seems to be the best at the moment), seeks a minimum spanning tree for a connected graph with weights. This means that it is a subset of edges forming a tree that includes all the vertices, wherein the total weight, given by the sum of the weights of the tree edges, is minimized. If the graph is not connected, then it finds a minimum spanning forest (a minimum spanning tree for each connected component of the graph).",
@@ -50,7 +64,7 @@ public class TextsEN {
                     "(ii) O(n) to initialize the different sets of each connected component;\n" +
                     "(iii) In the worst case, O((2a+n-1)*lg n) to determine and mix related components;\n" +
                     "(iv) The (a) for the remaining operations.\n" +
-                    "It follows that the total time for the Kruskal algorithm is O(log n)\n",
+                    "It follows that the total time for the Kruskal algorithm is O(log n)",
             "If | V | is the number of vertices and |E| the number of edges, so:\n" +
                     "(i) Initialization: T (V);\n" +
                     "(ii) Cycle \"while\" runs |V| times;\n" +
@@ -74,6 +88,10 @@ public class TextsEN {
 
     public static String getInsertionByPosition(int i) {
         return insertion[i];
+    }
+
+    public static String getErrorByPosition(int i) {
+        return error[i];
     }
 
     public static String[] getHelp() {

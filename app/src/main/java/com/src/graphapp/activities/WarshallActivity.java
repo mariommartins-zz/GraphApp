@@ -1,4 +1,4 @@
-package com.src.graphapp;
+package com.src.graphapp.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.src.graphapp.R;
 import com.src.graphapp.texts.TextsEN;
 
 public class WarshallActivity extends AppCompatActivity implements View.OnClickListener {
@@ -69,5 +70,10 @@ public class WarshallActivity extends AppCompatActivity implements View.OnClickL
                 Toast.makeText(WarshallActivity.this, TextsEN.getHelpByPosition(4), Toast.LENGTH_LONG).show();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

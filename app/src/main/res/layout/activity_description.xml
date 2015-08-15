@@ -88,7 +88,7 @@
                     android:background="@drawable/border"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:padding="5dp"
-                    android:textSize="10dp"
+                    android:textSize="15dp"
                     android:id="@+id/tvDescription"
                     android:layout_weight="7.97" />
 
@@ -116,7 +116,7 @@
                     android:background="@drawable/border"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:padding="5dp"
-                    android:textSize="10dp"
+                    android:textSize="15dp"
                     android:id="@+id/tvComplexity"
                     android:layout_weight="7.97" />
 

@@ -1,8 +1,9 @@
-package com.src.graphapp;
+package com.src.graphapp.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.src.graphapp.Controller;
+import com.src.graphapp.R;
 import com.src.graphapp.structures.Graph;
 import com.src.graphapp.texts.TextsEN;
 
@@ -19,10 +22,32 @@ public class MenuActivity extends Activity implements View.OnClickListener {
 
     ListView lvMenu;
     Button bHelp;
-    Graph graph;
+
+    int controllerLog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Intent i = getIntent();
+        controllerLog = Controller.main(i);
+        switch (controllerLog) {
+            case 1:
+                Toast.makeText(this, TextsEN.getErrorByPosition(0), Toast.LENGTH_LONG).show();
+                break;
+            case 2:
+                Toast.makeText(this, TextsEN.getInsertionByPosition(0), Toast.LENGTH_LONG).show();
+                break;
+            case 3:
+                Toast.makeText(this, TextsEN.getErrorByPosition(1), Toast.LENGTH_LONG).show();
+                break;
+            case 4:
+                Toast.makeText(this, TextsEN.getErrorByPosition(2), Toast.LENGTH_LONG).show();
+                break;
+            case 5:
+                Toast.makeText(this, TextsEN.getInsertionByPosition(1), Toast.LENGTH_LONG).show();
+                break;
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
@@ -48,6 +73,13 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                     case 2:
                         Intent i2 = new Intent(getApplicationContext(), GraphActivity.class);
                         i2.putExtra("title", TextsEN.getMenuByPosition(2));
+                        i2.putExtra("graph",Controller.getGraph().printGraph());
+
+                        /*if (i2.getStringExtra("graph").equals(Controller.getGraph().printGraph()))
+                            Toast.makeText(MenuActivity.this, "funciona", Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(MenuActivity.this, "não funciona", Toast.LENGTH_LONG).show();*/
+
                         i2.putExtra("description","hide");
                         i2.putExtra("complexity",TextsEN.getComplexityByPosition(0));
                         startActivity(i2);
@@ -101,6 +133,11 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                         i9.putExtra("complexity", TextsEN.getComplexityByPosition(6));
                         startActivity(i9);
                         break;
+                    case 10:
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        Controller.destroy();
+                        finish();
+                        break;
                 }
 
             }
@@ -140,4 +177,28 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                 break;
         }
     }
+
+    //Double Back to Exit Operation-----------------
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            Controller.destroy();
+            finish();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
+    //----------------------------------------------
 }

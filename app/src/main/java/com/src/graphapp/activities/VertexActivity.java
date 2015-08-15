@@ -1,4 +1,4 @@
-package com.src.graphapp;
+package com.src.graphapp.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,13 +7,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.src.graphapp.R;
 import com.src.graphapp.texts.TextsEN;
 
 public class VertexActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button bHelp, bInsert;
+    EditText etVertex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,7 @@ public class VertexActivity extends AppCompatActivity implements View.OnClickLis
 
         bHelp = (Button)findViewById(R.id.bHelp);
         bInsert = (Button)findViewById(R.id.bInsert);
+        etVertex = (EditText)findViewById(R.id.etVertex);
 
         bHelp.setOnClickListener(this);
         bInsert.setOnClickListener(this);
@@ -51,14 +55,29 @@ public class VertexActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
+        String vertex = etVertex.getText().toString();
+
         switch (v.getId()){
             case R.id.bHelp:
                 Toast.makeText(VertexActivity.this, TextsEN.getHelpByPosition(2), Toast.LENGTH_LONG).show();
                 break;
             case R.id.bInsert:
-                Toast.makeText(VertexActivity.this, TextsEN.getInsertionByPosition(0), Toast.LENGTH_LONG).show();
-                startActivity(new Intent(getApplicationContext(),MenuActivity.class));
+                if (vertex.equals("")){
+                    Toast.makeText(VertexActivity.this, TextsEN.getHelpByPosition(2), Toast.LENGTH_LONG).show();
+                }else {
+                    Intent i = new Intent(getApplicationContext(), MenuActivity.class);
+                    i.putExtra("previous", 1);
+                    i.putExtra("vertex", vertex);
+                    Toast.makeText(VertexActivity.this, i.getStringExtra("vertex"), Toast.LENGTH_LONG).show();
+                    startActivity(i);
+                    finish();
+                }
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }
