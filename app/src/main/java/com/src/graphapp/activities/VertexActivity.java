@@ -68,7 +68,6 @@ public class VertexActivity extends AppCompatActivity implements View.OnClickLis
                     Intent i = new Intent(getApplicationContext(), MenuActivity.class);
                     i.putExtra("previous", 1);
                     i.putExtra("vertex", vertex);
-                    Toast.makeText(VertexActivity.this, i.getStringExtra("vertex"), Toast.LENGTH_LONG).show();
                     startActivity(i);
                     finish();
                 }

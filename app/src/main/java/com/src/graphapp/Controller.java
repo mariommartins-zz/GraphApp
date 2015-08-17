@@ -18,7 +18,7 @@ public class Controller {
     }
 
     public static void destroy (){
-        graph = new Graph();
+        graph.clearGraph();
     }
 
     public static void initiate(Intent i){
@@ -31,8 +31,8 @@ public class Controller {
 
             graph.addEdge(2,"a","b");
             graph.addEdge(5,"b","c");
-            graph.addEdge(1,"c","a");
-            graph.addEdge(1,"a","c");
+            //graph.addEdge(1,"c","a");
+            graph.addEdge(2,"a","c");
             graph.addVertex("d");
             graph.addVertex("e");
             graph.addVertex("f");
@@ -92,10 +92,13 @@ public class Controller {
                 initiate(i);
                 break;
             case 1:
-                if(graph.addVertex(i.getStringExtra("vertex"))==-1) {
-                    return 1;
-                }else {
-                    return 2;
+                switch (graph.addVertex(i.getStringExtra("vertex"))) {
+                    case -1:
+                        return 1;
+                    case -2:
+                        return 6;
+                    default:
+                        return 2;
                 }
             case 2:
                 switch (graph.addEdge(i.getIntExtra("weight", -1),i.getStringExtra("start"),i.getStringExtra("end"))){

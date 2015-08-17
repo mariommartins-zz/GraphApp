@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.src.graphapp.Controller;
 import com.src.graphapp.R;
 import com.src.graphapp.texts.TextsEN;
 
@@ -64,12 +63,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 i.putExtra("previous",0);
                 i.putExtra("directed",rbDirected.isChecked());
                 i.putExtra("random", rbRandom.isChecked());
-
-                /*if (i.getBooleanExtra("directed",false))
-                    Toast.makeText(MainActivity.this, "funciona", Toast.LENGTH_LONG).show();
-                else
-                    Toast.makeText(MainActivity.this, "não funciona", Toast.LENGTH_LONG).show();*/
-
                 startActivity(i);
                 finish();
                 break;

@@ -55,35 +55,469 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <GridLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingBottom="20dp"
-        android:orientation="vertical" >
+        android:background="@drawable/border"
+        android:padding="5dp"
+        android:layout_gravity="center"
+        android:columnCount="12"
+        android:orientation="horizontal" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="left"
-            android:paddingLeft="20dp"
-            android:orientation="vertical"
-            android:weightSum="1">
+        <TextView
+            android:layout_column="1"
+            android:background="@drawable/border"
+            android:text=" - "/>
 
-            <TextView
-                android:layout_width="310dp"
-                android:layout_height="150dp"
-                android:background="@drawable/border"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:padding="5dp"
-                android:textSize="10dp"
-                android:id="@+id/tvWarshall"
-                android:layout_weight="7.97" />
+        <TextView
+            android:id="@+id/tvVc0"/>
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tvVc1"/>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/tvVc2"/>
+
+        <TextView
+            android:id="@+id/tvVc3"/>
+
+        <TextView
+            android:id="@+id/tvVc4"/>
+
+        <TextView
+            android:id="@+id/tvVc5"/>
+
+        <TextView
+            android:id="@+id/tvVc6"/>
+
+        <TextView
+            android:id="@+id/tvVc7"/>
+
+        <TextView
+            android:id="@+id/tvVc8"/>
+
+        <TextView
+            android:id="@+id/tvVc9"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text="----"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text="---"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text="-------"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text="-------"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text="-------"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text="-------"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text="-------"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text="-------"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text="-------"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text="-------"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text="-------"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text="-------"/>
+
+        <TextView
+            android:id="@+id/tvVl0"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text=" - "/>
+
+        <TextView
+            android:id="@+id/tv00"/>
+
+        <TextView
+            android:id="@+id/tv01"/>
+
+        <TextView
+            android:id="@+id/tv02"/>
+
+        <TextView
+            android:id="@+id/tv03"/>
+
+        <TextView
+            android:id="@+id/tv04"/>
+
+        <TextView
+            android:id="@+id/tv05"/>
+
+        <TextView
+            android:id="@+id/tv06"/>
+
+        <TextView
+            android:id="@+id/tv07"/>
+
+        <TextView
+            android:id="@+id/tv08"/>
+
+        <TextView
+            android:id="@+id/tv09"/>
+
+        <TextView
+            android:id="@+id/tvVl1"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text=" - "/>
+
+        <TextView
+            android:id="@+id/tv10"/>
+
+        <TextView
+            android:id="@+id/tv11"/>
+
+        <TextView
+            android:id="@+id/tv12"/>
+
+        <TextView
+            android:id="@+id/tv13"/>
+
+        <TextView
+            android:id="@+id/tv14"/>
+
+        <TextView
+            android:id="@+id/tv15"/>
+
+        <TextView
+            android:id="@+id/tv16"/>
+
+        <TextView
+            android:id="@+id/tv17"/>
+
+        <TextView
+            android:id="@+id/tv18"/>
+
+        <TextView
+            android:id="@+id/tv19"/>
+
+        <TextView
+            android:id="@+id/tvVl2"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text=" - "/>
+
+        <TextView
+            android:id="@+id/tv20"/>
+
+        <TextView
+            android:id="@+id/tv21"/>
+
+        <TextView
+            android:id="@+id/tv22"/>
+
+        <TextView
+            android:id="@+id/tv23"/>
+
+        <TextView
+            android:id="@+id/tv24"/>
+
+        <TextView
+            android:id="@+id/tv25"/>
+
+        <TextView
+            android:id="@+id/tv26"/>
+
+        <TextView
+            android:id="@+id/tv27"/>
+
+        <TextView
+            android:id="@+id/tv28"/>
+
+        <TextView
+            android:id="@+id/tv29"/>
+
+        <TextView
+            android:id="@+id/tvVl3"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text=" - "/>
+
+        <TextView
+            android:id="@+id/tv30"/>
+
+        <TextView
+            android:id="@+id/tv31"/>
+
+        <TextView
+            android:id="@+id/tv32"/>
+
+        <TextView
+            android:id="@+id/tv33"/>
+
+        <TextView
+            android:id="@+id/tv34"/>
+
+        <TextView
+            android:id="@+id/tv35"/>
+
+        <TextView
+            android:id="@+id/tv36"/>
+
+        <TextView
+            android:id="@+id/tv37"/>
+
+        <TextView
+            android:id="@+id/tv38"/>
+
+        <TextView
+            android:id="@+id/tv39"/>
+
+        <TextView
+            android:id="@+id/tvVl4"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text=" - "/>
+
+        <TextView
+            android:id="@+id/tv40"/>
+
+        <TextView
+            android:id="@+id/tv41"/>
+
+        <TextView
+            android:id="@+id/tv42"/>
+
+        <TextView
+            android:id="@+id/tv43"/>
+
+        <TextView
+            android:id="@+id/tv44"/>
+
+        <TextView
+            android:id="@+id/tv45"/>
+
+        <TextView
+            android:id="@+id/tv46"/>
+
+        <TextView
+            android:id="@+id/tv47"/>
+
+        <TextView
+            android:id="@+id/tv48"/>
+
+        <TextView
+            android:id="@+id/tv49"/>
+
+        <TextView
+            android:id="@+id/tvVl5"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text=" - "/>
+
+        <TextView
+            android:id="@+id/tv50"/>
+
+        <TextView
+            android:id="@+id/tv51"/>
+
+        <TextView
+            android:id="@+id/tv52"/>
+
+        <TextView
+            android:id="@+id/tv53"/>
+
+        <TextView
+            android:id="@+id/tv54"/>
+
+        <TextView
+            android:id="@+id/tv55"/>
+
+        <TextView
+            android:id="@+id/tv56"/>
+
+        <TextView
+            android:id="@+id/tv57"/>
+
+        <TextView
+            android:id="@+id/tv58"/>
+
+        <TextView
+            android:id="@+id/tv59"/>
+
+        <TextView
+            android:id="@+id/tvVl6"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text=" - "/>
+
+        <TextView
+            android:id="@+id/tv60"/>
+
+        <TextView
+            android:id="@+id/tv61"/>
+
+        <TextView
+            android:id="@+id/tv62"/>
+
+        <TextView
+            android:id="@+id/tv63"/>
+
+        <TextView
+            android:id="@+id/tv64"/>
+
+        <TextView
+            android:id="@+id/tv65"/>
+
+        <TextView
+            android:id="@+id/tv66"/>
+
+        <TextView
+            android:id="@+id/tv67"/>
+
+        <TextView
+            android:id="@+id/tv68"/>
+
+        <TextView
+            android:id="@+id/tv69"/>
+
+        <TextView
+            android:id="@+id/tvVl7"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text=" - "/>
+
+        <TextView
+            android:id="@+id/tv70"/>
+
+        <TextView
+            android:id="@+id/tv71"/>
+
+        <TextView
+            android:id="@+id/tv72"/>
+
+        <TextView
+            android:id="@+id/tv73"/>
+
+        <TextView
+            android:id="@+id/tv74"/>
+
+        <TextView
+            android:id="@+id/tv75"/>
+
+        <TextView
+            android:id="@+id/tv76"/>
+
+        <TextView
+            android:id="@+id/tv77"/>
+
+        <TextView
+            android:id="@+id/tv78"/>
+
+        <TextView
+            android:id="@+id/tv79"/>
+
+        <TextView
+            android:id="@+id/tvVl8"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text=" - "/>
+
+        <TextView
+            android:id="@+id/tv80"/>
+
+        <TextView
+            android:id="@+id/tv81"/>
+
+        <TextView
+            android:id="@+id/tv82"/>
+
+        <TextView
+            android:id="@+id/tv83"/>
+
+        <TextView
+            android:id="@+id/tv84"/>
+
+        <TextView
+            android:id="@+id/tv85"/>
+
+        <TextView
+            android:id="@+id/tv86"/>
+
+        <TextView
+            android:id="@+id/tv87"/>
+
+        <TextView
+            android:id="@+id/tv88"/>
+
+        <TextView
+            android:id="@+id/tv89"/>
+
+        <TextView
+            android:id="@+id/tvVl9"/>
+
+        <TextView
+            android:background="@drawable/border"
+            android:text=" - "/>
+
+        <TextView
+            android:id="@+id/tv90"/>
+
+        <TextView
+            android:id="@+id/tv91"/>
+
+        <TextView
+            android:id="@+id/tv92"/>
+
+        <TextView
+            android:id="@+id/tv93"/>
+
+        <TextView
+            android:id="@+id/tv94"/>
+
+        <TextView
+            android:id="@+id/tv95"/>
+
+        <TextView
+            android:id="@+id/tv96"/>
+
+        <TextView
+            android:id="@+id/tv97"/>
+
+        <TextView
+            android:id="@+id/tv98"/>
+
+        <TextView
+            android:id="@+id/tv99"/>
+
+    </GridLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

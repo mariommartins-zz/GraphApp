@@ -73,6 +73,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
             case R.id.bDescription:
                 Intent i2 = new Intent(getApplicationContext(), DescriptionActivity.class);
                 i2.putExtra("title",title);
+                i2.putExtra("previous",3);
                 i2.putExtra("description",description);
                 i2.putExtra("complexity",complexity);
                 startActivity (i2);

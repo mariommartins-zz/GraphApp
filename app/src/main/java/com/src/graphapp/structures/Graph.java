@@ -10,34 +10,35 @@ import java.util.Random;
  */
 
 public class Graph {
-    private static ArrayList<Edge> edges = new ArrayList<Edge>();
-    private static ArrayList<Vertex> vertices = new ArrayList<Vertex>();
-    private static boolean cycle = false;
-    private static boolean directed = false;
+    private ArrayList<Edge> edges = new ArrayList<Edge>();
+    private ArrayList<Vertex> vertices = new ArrayList<Vertex>();
+    private boolean cycle = false;
+    private boolean directed = false;
 
-    public static void clearLists() {
+    public void clearGraph() {
         edges.clear();
         vertices.clear();
         cycle = false;
+        directed = false;
     }
 
-    public static boolean isDirected() {
+    public boolean isDirected() {
         return directed;
     }
 
-    public static void setCycle(boolean c) {
+    public void setCycle(boolean c) {
         cycle = c;
     }
 
-    public static void setDirected(boolean d) {
+    public void setDirected(boolean d) {
         directed = d;
     }
 
-    public static ArrayList<Vertex> getVertices() {
+    public ArrayList<Vertex> getVertices() {
         return vertices;
     }
 
-    public static String printGraph() {
+    public String printGraph() {
         String stuart = "";
 
         for (Edge edge: getEdges()){
@@ -61,12 +62,14 @@ public class Graph {
             stuart = stuart + "undirected\n";
         if(cycle)
             stuart = stuart + "cycle\n";
+        else
+            stuart = stuart + "cycle\n";
         cleanVisitedVertex();
 
         return stuart;
     }
 
-    public static String printVertices() {
+    public String printVertices() {
         String stuart = "";
 
         stuart = stuart + "{";
@@ -80,21 +83,21 @@ public class Graph {
         return stuart;
     }
 
-    public static void cleanVisitedVertex() {
+    public void cleanVisitedVertex() {
         for (Vertex v: getVertices())
             v.setVisited(false);
     }
 
-    public static void cleanVisitedEdge() {
+    public void cleanVisitedEdge() {
         for (Edge e: getEdges())
             e.setVisited(false);
     }
 
-    public static ArrayList<Edge> getEdges() {
+    public ArrayList<Edge> getEdges() {
         return edges;
     }
 
-    public static int addEdge(int weight, String start, String end) {
+    public int addEdge(int weight, String start, String end) {
         int i, j, k;
 
         if (start.equals(end))
@@ -139,11 +142,14 @@ public class Graph {
     }
 
     // add a vertex returning its position or '-1' if the insertion was not possible
-    public static int addVertex(String nome) {
+    public int addVertex(String nome) {
         int i = vertexLocation(nome);
 
-        //Checking if the Vertices can be inserted (the maximum number of vertices is 10)
-        if ((i==vertices.size())&&(vertices.size()==10))
+        //Checking if the Vertex already exist
+        if(i!=vertices.size())
+            return -2;
+        //Checking if the Vertex can be inserted (the maximum number of vertices is 10)
+        if (vertices.size()==10)
             return -1;
 
         if (i == vertices.size()) {
@@ -156,7 +162,7 @@ public class Graph {
     }
 
     // returns the location of a vertex in the list
-    public static int vertexLocation(String nome) {
+    public int vertexLocation(String nome) {
         int i;
 
         for (i = 0; i < vertices.size(); i++)
@@ -168,11 +174,11 @@ public class Graph {
 
     }
 
-    public static Vertex findVertex(String name) {
+    public Vertex findVertex(String name) {
         return vertices.get(vertexLocation(name));
     }
 
-    public static Edge findEdge(Vertex vet1, Vertex vet2) {
+    public Edge findEdge(Vertex vet1, Vertex vet2) {
         if (directed){
             for (Edge e: edges)
                 if (((e.getStart().getName().equals(vet1.getName())) &&
@@ -190,17 +196,17 @@ public class Graph {
 
     }
 
-    public static void cleanPreviousVertex() {
+    public void cleanPreviousVertex() {
         for (Vertex v: getVertices())
             v.setPrevious(null);
     }
 
-    public static void cleanDistances() {
+    public void cleanDistances() {
         for (Vertex v: getVertices())
             v.setDistance(0);
     }
 
-    public static ArrayList<Edge> edgeListCreator (ArrayList<Vertex> pathVertex){
+    public ArrayList<Edge> edgeListCreator (ArrayList<Vertex> pathVertex){
         ArrayList<Edge> pathEdge = new ArrayList<Edge>();
         Edge edge;
 
@@ -213,7 +219,7 @@ public class Graph {
         return pathEdge;
     }
 
-    public static Graph graphCreator (ArrayList<Edge> pathEdge){
+    public Graph graphCreator (ArrayList<Edge> pathEdge){
         Graph graph = new Graph();
         graph.setDirected(directed);
 
@@ -224,7 +230,7 @@ public class Graph {
         return graph;
     }
 
-    public static int randomNumber (){
+    public int randomNumber (){
 
         // getting a Random number by the random function
         Random rn = new Random();
@@ -239,7 +245,7 @@ public class Graph {
         return b;
     }
 
-    public static void randomGraphCreator (){
+    public void randomGraphCreator (){
         //1 - add vertices
         //2 - add edges
         //2.1 - pesos serão num aleatórios
@@ -275,27 +281,35 @@ public class Graph {
 
     // ----------------------KRUSKAL--------------------------------------------
 
-    public static Graph kruskal() {
-        Edge aux;
+    public Graph kruskal() {
+        Edge edge;
         Graph result = new Graph();
         result.setDirected(directed);
 
         for (int i = 0; i < getEdges().size(); i++) {
             // look for the unvisited edge with the lower weight
-            aux = lowerWeight();
-            // if the edge do not create a cycle, it is added to the Kruskal's
+            edge = lowerWeight();
+            String start = edge.getStart().getName();
+            String end = edge.getEnd().getName();
+            int size = result.getVertices().size();
+            // if the edge do not create a cycle and one of the vertices is not in the result graph, it is added to the Kruskal's graph
             // Tree (or forest)
-            if (!result.hasCycle(aux)) {
-                result.addEdge(aux.getWeight(), aux.getStart().getName(), aux
-                        .getEnd().getName());
+            if ((!result.hasCycle(edge)) &&
+                    ((result.vertexLocation(start)==size)||(result.vertexLocation(end)==size))){
+                result.addEdge(edge.getWeight(), start, end);
             }
         }
 
+        for (Vertex v: vertices){
+            if(result.vertexLocation(v.getName())==result.getVertices().size()){
+                result.addVertex(v.getName());
+            }
+        }
         return result;
     }
 
     // look for the unvisited edge with the lower weight
-    public static Edge lowerWeight() {
+    public Edge lowerWeight() {
         int j;
 
         for (j = 0; j < getEdges().size(); j++) {
@@ -322,7 +336,7 @@ public class Graph {
 
     // method that returns whether a certain new edge can create a cycle or not
     // in the currentVertex graph
-    public static boolean hasCycle(Edge edge) {
+    public boolean hasCycle(Edge edge) {
 
         String start = edge.getStart().getName();
         String end = edge.getEnd().getName();
@@ -382,7 +396,7 @@ public class Graph {
 
     // ----------------------DIJKSTRA-------------------------------------------
 
-    public static Graph dijkstra(String start, String end) {
+    public Graph dijkstra(String start, String end) {
 
         Vertex v1 = findVertex(start);
         Vertex v2 = findVertex(end);
@@ -488,7 +502,7 @@ public class Graph {
 
     // ------------------BREADTH-FIRST-SEARCH---------------------------------------
 
-    public static Graph breadthFirstSearch(String start) {
+    public Graph breadthFirstSearch(String start) {
 
         ArrayList<Edge> breadthTree = new ArrayList<Edge>();
 
@@ -524,7 +538,7 @@ public class Graph {
     //------------------DEPTH-FIRST-SEARCH----------------------------------
 
     //Calls the recursive method of Depth-First Search and returns a Graph with the result
-    public	static Graph depthFirstSearch(String start){
+    public Graph depthFirstSearch(String start){
 
         ArrayList<Edge> depthTree = new ArrayList<Edge>();
 
@@ -539,7 +553,7 @@ public class Graph {
     }
 
     //Recursive method that return a boolean as response by the search for a vertex and sets as visited all the vertices and edges on the way.
-    public static void recursiveSearch(String start){
+    public void recursiveSearch(String start){
 
         int startIndex = vertexLocation(start);
         Edge edge;
@@ -567,7 +581,7 @@ public class Graph {
 
     //------------------TOPOLOGICAL-SORTING-----------------------------------
 
-    public static void depthFirstTS(Vertex v, ArrayList<Vertex> list) {
+    public void depthFirstTS(Vertex v, ArrayList<Vertex> list) {
 
         Edge edge;
         v.setVisited(true);
@@ -581,7 +595,7 @@ public class Graph {
         list.add(v);
     }
 
-    public static ArrayList<Vertex> topologicalSort() {
+    public ArrayList<Vertex> topologicalSort() {
         ArrayList<Vertex> order = new ArrayList<Vertex>();
 
         if(!directed){
@@ -601,9 +615,9 @@ public class Graph {
 
     //------------------TRANSITIVE-CLOSURE---------------------------------------
 
-    public static Graph transitiveClosure (){
-        Graph graph = new Graph();
-        int[][] weightsFW = floydWarshall();
+    public Graph transitiveClosure (){
+        Graph graph;
+        Integer[][] weightsFW = floydWarshall();
         int weight;
 
         graph = graphCreator(edges);
@@ -624,13 +638,19 @@ public class Graph {
             cleanVisitedVertex();
         }
 
+        for (Vertex v: vertices){
+            if(graph.vertexLocation(v.getName())==graph.getVertices().size()){
+                graph.addVertex(v.getName());
+            }
+        }
         return graph;
     }
 
     //------------------FLOYD-WARSHALL----------------------------------
 
-    public static int[][] createGraphMatrix(){
-        int[][] matrix = new int[vertices.size()][vertices.size()];
+    public Integer[][] createGraphMatrix(){
+        int n = vertices.size();
+        Integer[][] matrix = new Integer[n][n];
 
         for(int i = 0; i < vertices.size(); i++){
             for(int j = 0; j < vertices.size(); j++){
@@ -652,11 +672,11 @@ public class Graph {
         return matrix;
     }
 
-    public static int[][] floydWarshall(){
+    public Integer[][] floydWarshall(){
         int n = vertices.size();
 
-        int[][] dist = createGraphMatrix();
-        int[][] pred = new int[n][n];
+        Integer[][] dist = createGraphMatrix();
+        Integer[][] pred = new Integer[n][n];
 
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)

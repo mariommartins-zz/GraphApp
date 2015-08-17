@@ -31,6 +31,14 @@ public class TextsEN {
                     "\nIt is not allowed edges from a vertex to itself.",
             "ERROR" +
                     "\nThis Edge already exists.",
+            "ERROR" +
+                    "\nVertex not found",
+            "ERROR" +
+                    "\n\"The graph is not directed.\"",
+            "ERROR" +
+                    "\nThe graph has cycle.",
+            "ERROR" +
+                    "\nThis Vertex already exist.",
     };
 
     final static String[] help = {
@@ -39,20 +47,22 @@ public class TextsEN {
             "Tap the option you would like to use in the list.\n" +
                     "Select the last item to restart the app.\n" +
                     "Tap twice the back button to close the app.",
-            "Put the Vertex's Name in the given space and tap Insert to complete the operation.\n" +
+            "Input the Vertex's Name in the given space and tap Insert to complete the operation.\n" +
                     "Tap the back button to return to the last view",
-            "Put the Edge's Weight,Start and End in the given spaces and tap Insert to complete the operation.\n" +
+            "Input the Edge's Weight,Start and End in the given spaces and tap Insert to complete the operation.\n" +
                     "Tap the back button to return to the last view",
             "Tap the DESCRIPTION button for details about the algorithm.\n" +
                     "Tap the back button to return to the last view",
-            "Tap the back button to return to the last view"
+            "Tap the back button to return to the last view",
+            "Input the asked vertex(s) in the given space(s) and tap next to see the result.\n" +
+                    "Tap the back button to return to the last view",
     };
 
     final static String[] description = {"The Kruskal's algorithm, which is an example of a greedy algorithm (always conducting to the choice which seems to be the best at the moment), seeks a minimum spanning tree for a connected graph with weights. This means that it is a subset of edges forming a tree that includes all the vertices, wherein the total weight, given by the sum of the weights of the tree edges, is minimized. If the graph is not connected, then it finds a minimum spanning forest (a minimum spanning tree for each connected component of the graph).",
             "The Dijkstra's algorithm is (also of the \"greedy\" kind) solves the problem of the shortest path between two vertices in a graph weighted directed or undirected.",
             "A BFS is a search method that expands and systematically examines all vertices of a graph directed or undirected. The algorithm ensures that no vertex or edge is played more than once. For this, it uses a queue that ensures the analysis order of each vertex. It works as follows: Given a root, it is analyzed and its direct neighbors are queued. After this, we apply the same steps to the next item of the line, repeating the process until the queue is empty. An well known analogy to demonstrate the operation of the algorithm is painting the vertices of white, gray and black. The vertices in white represent the vertices that have not been marked nor queued, the gray color are the vertices that are in the queue structure and the black color are those who have had queued all its neighboring vertices and marked by algorithm.",
             "The DFS algorithm is used to perform a search or a crossing in a tree, tree structure, or graph. Intuitively, the algorithm starts at a root node (as our case is a graph, the node is previously informed by the user) and explores each of its branches as much as possible. When the end of the way is found, it goes back to the previous vertex to assess whether it is possible to continue the search for another of its neighbors. This process is repeated until all vertices be checked.",
-            "The Topological Sorting algorithm is responsible for returning a linear order of the vertices such that the criterion of ordination is that any vertex which is son of another vertex should be in a lower order than its vertex \"father\". This makes it possible to see that a graph has more than a topological order, as there are vertices that are not related. A great use of this algorithm is to developing a task scheduler, given that there are some tasks that only can be completed if other tasks are completed. If the graph G(V, E) contains cycles, we can not set a topological order.",
+            "The Topological Sorting algorithm is responsible for returning a linear order of the vertices such that the criterion of ordination is that any vertex which is son of another vertex should be in a lower order than its vertex \"father\". This makes it possible to see that a graph has more than a topological order, as there are vertices that are not related. A great use for this algorithm is to developing a task scheduler, given that there are some tasks that only can be completed if other tasks are completed. If the graph G(V, E) is undirected or contain at least a cycle, we can not set a topological order.",
             "The Transitive Closure Algorithm applied to a directed graph will return a new graph with all existent edges and some new edges creating ways between every two vertices of the graph that has a connecting path.",
             "The Floyd–Warshall Algorithm is used to calculate the distance of the shortest path between all vertices of a graph, two-for-two. The input of this algorithm is a graph G(V, E) and its output is an matrix | V | x | V | that contains the shortest distance between each vertex. In this case, this matrix has the diagonal zeroed, since the distance from one vertex to itself is zero (unless there is a distance to the own vertex in the input graph G)."
     };

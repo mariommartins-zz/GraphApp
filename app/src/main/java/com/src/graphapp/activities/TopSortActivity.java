@@ -11,17 +11,40 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.src.graphapp.Controller;
 import com.src.graphapp.R;
+import com.src.graphapp.structures.Graph;
+import com.src.graphapp.structures.Vertex;
 import com.src.graphapp.texts.TextsEN;
+
+import java.util.ArrayList;
 
 public class TopSortActivity extends Activity implements View.OnClickListener {
 
     ListView lvTopSort;
     Button bDescription, bHelp;
     String title, description, complexity;
+    Graph graph = Controller.getGraph();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ArrayList<Vertex> vertices = graph.topologicalSort();
+        String[] topSort = new String[graph.getVertices().size()];
+
+        if (vertices.get(0).getName().equals("Not directed")) {
+            Toast.makeText(TopSortActivity.this, TextsEN.getErrorByPosition(4), Toast.LENGTH_LONG).show();
+            finish();
+        } else if (vertices.get(0).getName().equals("cycle")) {
+            Toast.makeText(TopSortActivity.this, TextsEN.getErrorByPosition(5), Toast.LENGTH_LONG).show();
+            finish();
+        }else{
+            int count = 1;
+            for (Vertex v: vertices) {
+                topSort[count-1] = count + ". " + v.getName();
+                count++;
+            }
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_sort);
 
@@ -32,16 +55,15 @@ public class TopSortActivity extends Activity implements View.OnClickListener {
 
         lvTopSort = (ListView) findViewById(R.id.lvTopSort);
         bHelp = (Button)findViewById(R.id.bHelp);
-
         bDescription = (Button)findViewById(R.id.bDescription);
 
         bDescription.setOnClickListener(this);
+        bHelp.setOnClickListener(this);
 
-        String[] menu = {"1. a", "2. b", "3. c"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, topSort);
         lvTopSort.setAdapter(adapter);
 
-        bHelp.setOnClickListener(this);
+
     }
 
     @Override
@@ -72,6 +94,7 @@ public class TopSortActivity extends Activity implements View.OnClickListener {
             case R.id.bDescription:
                 Intent i2 = new Intent(getApplicationContext(), DescriptionActivity.class);
                 i2.putExtra("title",title);
+                i2.putExtra("previous",3);
                 i2.putExtra("description",description);
                 i2.putExtra("complexity", complexity);
                 startActivity (i2);
