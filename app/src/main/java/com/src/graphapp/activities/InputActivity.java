@@ -98,7 +98,9 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
                         }else {
                             Intent i2 = new Intent(this, GraphActivity.class);
                             i2.putExtra("title", title);
-                            i2.putExtra("graph", graph.dijkstra(start, end).printGraph());
+                            i2.putExtra("algorithm", algorithm);
+                            i2.putExtra("start", start);
+                            i2.putExtra("end", end);
                             i2.putExtra("description", description);
                             i2.putExtra("complexity", complexity);
                             startActivity(i2);
@@ -108,7 +110,9 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
                     } else if (algorithm == 5) {
                         Intent i2 = new Intent(this, GraphActivity.class);
                         i2.putExtra("title", title);
-                        i2.putExtra("graph", graph.breadthFirstSearch(start).printGraph());
+                        i2.putExtra("algorithm", algorithm);
+                        i2.putExtra("start", start);
+                        i2.putExtra("end", "");
                         i2.putExtra("description", description);
                         i2.putExtra("complexity", complexity);
                         startActivity(i2);
@@ -116,7 +120,9 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
                     } else if (algorithm == 6) {
                         Intent i2 = new Intent(this, GraphActivity.class);
                         i2.putExtra("title", title);
-                        i2.putExtra("graph", graph.depthFirstSearch(start).printGraph());
+                        i2.putExtra("algorithm", algorithm);
+                        i2.putExtra("start", start);
+                        i2.putExtra("end", "");
                         i2.putExtra("description", description);
                         i2.putExtra("complexity", complexity);
                         startActivity(i2);

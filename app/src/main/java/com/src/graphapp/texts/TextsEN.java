@@ -16,6 +16,7 @@ public class TextsEN {
             "Topological Sorting",
             "Transitive Closure",
             "Floyd–Warshall",
+            "Reference",
             "RESTART EMULATOR"
     };
 
@@ -39,6 +40,9 @@ public class TextsEN {
                     "\nThe graph has cycle.",
             "ERROR" +
                     "\nThis Vertex already exist.",
+            "ERROR" +
+                    "\nThe only path with weight '0' is the path from a vertex to itself." +
+                    "\nWhich can't be inserted."
     };
 
     final static String[] help = {
@@ -64,28 +68,46 @@ public class TextsEN {
             "The DFS algorithm is used to perform a search or a crossing in a tree, tree structure, or graph. Intuitively, the algorithm starts at a root node (as our case is a graph, the node is previously informed by the user) and explores each of its branches as much as possible. When the end of the way is found, it goes back to the previous vertex to assess whether it is possible to continue the search for another of its neighbors. This process is repeated until all vertices be checked.",
             "The Topological Sorting algorithm is responsible for returning a linear order of the vertices such that the criterion of ordination is that any vertex which is son of another vertex should be in a lower order than its vertex \"father\". This makes it possible to see that a graph has more than a topological order, as there are vertices that are not related. A great use for this algorithm is to developing a task scheduler, given that there are some tasks that only can be completed if other tasks are completed. If the graph G(V, E) is undirected or contain at least a cycle, we can not set a topological order.",
             "The Transitive Closure Algorithm applied to a directed graph will return a new graph with all existent edges and some new edges creating ways between every two vertices of the graph that has a connecting path.",
-            "The Floyd–Warshall Algorithm is used to calculate the distance of the shortest path between all vertices of a graph, two-for-two. The input of this algorithm is a graph G(V, E) and its output is an matrix | V | x | V | that contains the shortest distance between each vertex. In this case, this matrix has the diagonal zeroed, since the distance from one vertex to itself is zero (unless there is a distance to the own vertex in the input graph G)."
+            "The Floyd–Warshall Algorithm is used to calculate the distance of the shortest path between all vertices of a graph, two-for-two. The input of this algorithm is a graph G(V, E) and its output is an matrix | V | x | V | that contains the shortest distance between each vertex. In this case, this matrix has the diagonal zeroed, since the distance from one vertex to itself is zero (unless there is a distance to the own vertex in the input graph G).",
+            "Is directed",
+            "Is undirected",
+            "Has cycle",
+            "Has no cycle"
     };
 
     final static String[] complexity = {
-            "The complexity of the Kruskal algorithm is given as follows:\n" +
-                    "In a graph with 'n' nodes and 'a' edges, the number of operations is:\n" +
-                    "(i) O(log a) to order the edges, which is equivalent to O(log n);\n" +
-                    "(ii) O(n) to initialize the different sets of each connected component;\n" +
-                    "(iii) In the worst case, O((2a+n-1)*lg n) to determine and mix related components;\n" +
-                    "(iv) The (a) for the remaining operations.\n" +
-                    "It follows that the total time for the Kruskal algorithm is O(log n)",
-            "If | V | is the number of vertices and |E| the number of edges, so:\n" +
-                    "(i) Initialization: T (V);\n" +
-                    "(ii) Cycle \"while\" runs |V| times;\n" +
-                    "(ii.1) All graph arcs are visited, vertices and edges;\n" +
-                    "Total = O (V lg V + E lg V) = O ((V+E)lg V).",
-            "Given a graph G (V,E) where V is the set of vertices and E the set of edges of the graph, in the worst case the algorithm represents a cost of O(|V|+|E|), where |E| means the total of all edges, and |V| means the number of vertices. The characteristic worst case occurs when the algorithm goes through all the vertices and all edges of the graph. One must realize that |V| represents the operations performed on the vertices, which is always constant (usually an operation that checks whether it is the sought vertex, mark as visited and dequeue) for each vertex, and |E| represents the operations carried out in each edge (usually the operation of picking up the neighbor's edge \"a\" of the graph).",
-            "The space complexity of the search algorithm is much smaller in DFS than that in BFS. The temporal complexity is unique since it is proportional to the number of vertices plus the number of edges of the graph they traverse. However, when there are searches in very large graphs, the DFS can not finish because the operation of remember what were visited not work for lack of memory space. Analyzing this complexity, it is possible to see that the total cost of this algorithm is O(V+E), where V is the number of vertices and E the number of edges, that is, the same complexity of BFS.",
-            "The complexity of the topological sort algorithm is given by the complexity of the DFS which is O(|V|+|E|) as explained above. In the case of our implementation, we have O(|V|+|E|) to the DFS method and O(|V|) to the operation of reversing the order of the list. with this the complexity is O(|V|+|E|) + O(|V|).",
-            "The complexity is O(n³) because there is three repetition structure involved in the algorithm for interacting with the vertices that have paths with each other.",
-            "The time complexity of the Warshall algorithm is defined by the 3 loops that pass through all the vertices. In this case, the complexity of this algorithm is O(n³). The algorithm is simple but practical in some mid-size entries."
+            "The complexity of the Kruskal's algorithm for a graph G(V,E) in this case is:\n" +
+                    "O(E lgV).\n\n" +
+                    "p.s.: It's good to keep in mind that the running time of an algorithm depends of its implementation, for more information check the given reference in the Menu page",
+            "The complexity of the Dijkstra's algorithm for a graph G(V,E) in this case is:\n" +
+                    "O(V²).\n\n" +
+                    "p.s.: It's good to keep in mind that the running time of an algorithm depends of its implementation, for more information check the given reference in the Menu page",
+            "The complexity of the Breadth-First Search algorithm for a graph G(V,E) in this case is:\n" +
+                    "O(V + E).\n\n" +
+                    "p.s.: It's good to keep in mind that the running time of an algorithm depends of its implementation, for more information check the given reference in the Menu page",
+            "The complexity of the Depth-First Search algorithm for a graph G(V,E) in this case is:\n" +
+                    "O(V + E).\n\n" +
+                    "p.s.: It's good to keep in mind that the running time of an algorithm depends of its implementation, for more information check the given reference in the Menu page",
+            "The complexity of the Topological Sort algorithm for a graph G(V,E) in this case is:\n" +
+                    "O(V + E).\n\n" +
+                    "p.s.: It's good to keep in mind that the running time of an algorithm depends of its implementation, for more information check the given reference in the Menu page",
+            "The complexity of the Transitive Closure algorithm for a graph G(V,E) in this case is:\n" +
+                    "O(V³).\n\n" +
+                    "p.s.: It's good to keep in mind that the running time of an algorithm depends of its implementation, for more information check the given reference in the Menu page",
+            "The complexity of the Floyd-Warshall algorithm for a graph G(V,E) in this case is:\n" +
+                    "O(V³).\n\n" +
+                    "p.s.: It's good to keep in mind that the running time of an algorithm depends of its implementation, for more information check the given reference in the Menu page",
     };
+
+    final static String reference =
+            "Complexity:\n" +
+            "Kruskal                (pg.633)\n" +
+            "Dijkstra               (pg.662)\n" +
+            "BFS                    (pg.597)\n" +
+            "DFS                    (pg.606)\n" +
+            "Topological Sort       (pg.613)\n" +
+            "Transitive Closure     (pg.697)\n" +
+            "Floyd Warshall         (pg.695)";
 
 
     public static String[] getMenu() {
@@ -118,5 +140,9 @@ public class TextsEN {
 
     public static String getComplexityByPosition(int i) {
         return complexity[i];
+    }
+
+    public static String getReference(){
+        return reference;
     }
 }

@@ -48,6 +48,10 @@
             android:name=".activities.InputActivity"
             android:label="@string/title_activity_input" >
         </activity>
+        <activity
+            android:name=".activities.ReferenceActivity"
+            android:label="@string/title_activity_reference" >
+        </activity>
     </application>
 
 </manifest>

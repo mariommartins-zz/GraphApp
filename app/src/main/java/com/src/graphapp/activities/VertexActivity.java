@@ -77,6 +77,7 @@ public class VertexActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onBackPressed() {
+        startActivity(new Intent(this, MenuActivity.class));
         finish();
     }
 }

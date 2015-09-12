@@ -35,4 +35,6 @@
     <string name="error">ERROR</string>
     <string name="help">HELP</string>
     <string name="title_activity_input">InputActivity</string>
+    <string name="title_activity_reference">ReferenceActivity</string>
+    <string name="reference">Reference</string>
 </resources>

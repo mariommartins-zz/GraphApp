@@ -1,5 +1,7 @@
 package com.src.graphapp.structures;
 
+import com.src.graphapp.texts.TextsEN;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -14,20 +16,22 @@ public class Graph {
     private ArrayList<Vertex> vertices = new ArrayList<Vertex>();
     private boolean cycle = false;
     private boolean directed = false;
+    private boolean connected = false;
 
     public void clearGraph() {
         edges.clear();
         vertices.clear();
         cycle = false;
         directed = false;
+        connected = false;
+    }
+
+    public boolean isConnected() {
+        return connected;
     }
 
     public boolean isDirected() {
         return directed;
-    }
-
-    public void setCycle(boolean c) {
-        cycle = c;
     }
 
     public void setDirected(boolean d) {
@@ -57,13 +61,13 @@ public class Graph {
         stuart = stuart + "\n";
 
         if(directed)
-            stuart = stuart + "directed\n";
+            stuart = stuart + TextsEN.getDescriptionByPosition(7) + "\n";
         else
-            stuart = stuart + "undirected\n";
+            stuart = stuart + TextsEN.getDescriptionByPosition(8) + "\n";
         if(cycle)
-            stuart = stuart + "cycle\n";
+            stuart = stuart + TextsEN.getDescriptionByPosition(9) + "\n";
         else
-            stuart = stuart + "cycle\n";
+            stuart = stuart + TextsEN.getDescriptionByPosition(10) + "\n";
         cleanVisitedVertex();
 
         return stuart;
@@ -104,6 +108,8 @@ public class Graph {
             return -2;
         if (findEdge(new Vertex(start), new Vertex(end))!=null) //Edge already exists
             return -3;
+        if (weight == 0)
+            return -4;
 
         i=vertexLocation(start);
         j=vertexLocation(end);
@@ -115,7 +121,7 @@ public class Graph {
                 k++;
             if (j==vertices.size())
                 k++;
-            if (k>vertices.size())
+            if (k>10)
                 return -1;
         }
 
@@ -138,7 +144,49 @@ public class Graph {
         vertices.get(i).addIncidents(edges.get(k - 1));
         vertices.get(j).addIncidents(edges.get(k - 1));
 
+        if (!connected)
+            setConnected();
+
         return (edges.size() -1);
+    }
+
+    public boolean setConnected(){
+        String start = vertices.get(0).getName();
+
+        ArrayList<Vertex> breadthTree = new ArrayList<Vertex>();
+
+        for (Vertex v : vertices) {
+            v.setColor("white");
+        }
+
+        Vertex current = findVertex(start);
+        current.setColor("grey");
+
+        LinkedList<Vertex> queue = new LinkedList<Vertex>();
+        queue.add(current);
+
+        while (queue.size() > 0) {
+            current = queue.remove();
+            current.setColor("black");
+
+            for (Vertex neighbor : current.getNeighbors()) {
+                Edge edge = findEdge(current, neighbor);
+                if (neighbor.getColor().equals("white") &&
+                        (edge != null) ) {
+
+                    neighbor.setColor("grey");
+                    queue.add(neighbor);
+                    breadthTree.add(current);
+                    breadthTree.add(neighbor);
+                }
+            }
+        }
+
+        if(breadthTree.size()<vertices.size())
+            return false;
+
+        connected = true;
+        return true;
     }
 
     // add a vertex returning its position or '-1' if the insertion was not possible
@@ -154,6 +202,7 @@ public class Graph {
 
         if (i == vertices.size()) {
             vertices.add(new Vertex(nome));
+            connected = false;
             return (vertices.size() - 1);
         }
 
@@ -179,18 +228,20 @@ public class Graph {
     }
 
     public Edge findEdge(Vertex vet1, Vertex vet2) {
-        if (directed){
-            for (Edge e: edges)
-                if (((e.getStart().getName().equals(vet1.getName())) &&
-                        (e.getEnd().getName().equals(vet2.getName()))))
-                    return e;
-        }else{
-            for (Edge e: edges)
-                if (((e.getStart().getName().equals(vet1.getName())) &&
-                        (e.getEnd().getName().equals(vet2.getName()))) ||
-                        ((e.getStart().getName().equals(vet2.getName())) &&
-                                (e.getEnd().getName().equals(vet1.getName()))))
-                    return e;
+        if (!vet1.equals(vet2)) {
+            if (directed) {
+                for (Edge e : edges)
+                    if (((e.getStart().getName().equals(vet1.getName())) &&
+                            (e.getEnd().getName().equals(vet2.getName()))))
+                        return e;
+            } else {
+                for (Edge e : edges)
+                    if (((e.getStart().getName().equals(vet1.getName())) &&
+                            (e.getEnd().getName().equals(vet2.getName()))) ||
+                            ((e.getStart().getName().equals(vet2.getName())) &&
+                                    (e.getEnd().getName().equals(vet1.getName()))))
+                        return e;
+            }
         }
         return null;
 
@@ -240,9 +291,8 @@ public class Graph {
         String o = Long.toString(System.currentTimeMillis() / i);
         o =  new StringBuilder(o).reverse().toString();
         char a = (char)o.charAt(0);
-        int b = Character.getNumericValue(a);
 
-        return b;
+        return Character.getNumericValue(a);
     }
 
     public void randomGraphCreator (){
@@ -285,6 +335,7 @@ public class Graph {
         Edge edge;
         Graph result = new Graph();
         result.setDirected(directed);
+        result.addVertex(this.getVertices().get(0).getName()); //adding the first vertex
 
         for (int i = 0; i < getEdges().size(); i++) {
             // look for the unvisited edge with the lower weight
@@ -295,16 +346,17 @@ public class Graph {
             // if the edge do not create a cycle and one of the vertices is not in the result graph, it is added to the Kruskal's graph
             // Tree (or forest)
             if ((!result.hasCycle(edge)) &&
-                    ((result.vertexLocation(start)==size)||(result.vertexLocation(end)==size))){
+                    ((result.vertexLocation(start)==size)||(result.vertexLocation(end)==size)||(result.isConnected()!=isConnected()))){
                 result.addEdge(edge.getWeight(), start, end);
             }
         }
 
         for (Vertex v: vertices){
-            if(result.vertexLocation(v.getName())==result.getVertices().size()){
+            if(result.vertexLocation(v.getName())==result.getVertices().size()||!result.isConnected()){
                 result.addVertex(v.getName());
             }
         }
+
         return result;
     }
 

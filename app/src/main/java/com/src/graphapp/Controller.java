@@ -29,6 +29,15 @@ public class Controller {
         } else {
             // TEST
 
+            /*graph.addEdge(1,"a","b");
+            graph.addEdge(2,"b","d");
+            graph.addEdge(8,"b","e");
+            graph.addEdge(9,"a","c");
+            graph.addEdge(3,"e","c");
+            graph.addEdge(1,"d","f");
+            graph.addEdge(1,"f","e");
+            graph.addEdge(4,"f","g");
+            /*
             graph.addEdge(2,"a","b");
             graph.addEdge(5,"b","c");
             //graph.addEdge(1,"c","a");
@@ -41,12 +50,12 @@ public class Controller {
             graph.addVertex("i");
             graph.addVertex("j");
             /*
-            graph.addEdge(0,"D","C");
-            graph.addEdge(0,"D","B");
-            graph.addEdge(0,"E","C");
-            graph.addEdge(0,"E","F");
-            graph.addEdge(0,"B","A");
-            graph.addEdge(0,"A","F");
+            graph.addEdge(1,"D","C");
+            graph.addEdge(1,"D","B");
+            graph.addEdge(1,"E","C");
+            graph.addEdge(1,"E","F");
+            graph.addEdge(1,"B","A");
+            graph.addEdge(1,"A","F");
             /*
             graph.addEdge(2,"a","c");
             graph.addEdge(9,"a","e");
@@ -108,6 +117,8 @@ public class Controller {
                         return 3;
                     case -3:
                         return 4;
+                    case -4:
+                        return 7; //Do not accept weight 0
                     default:
                         return 5;
                 }

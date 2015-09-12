@@ -71,6 +71,8 @@ public class EdgeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bInsert:
                 if ((etWeight.getText().toString().equals(""))||(start.equals(""))||(end.equals(""))){
                     Toast.makeText(EdgeActivity.this, TextsEN.getHelpByPosition(3), Toast.LENGTH_LONG).show();
+                }else if(etWeight.getText().toString().equals("0")) {
+                    Toast.makeText(EdgeActivity.this, TextsEN.getErrorByPosition(7), Toast.LENGTH_LONG).show();
                 }else {
                     weight = Integer.parseInt(etWeight.getText().toString());
 
@@ -88,6 +90,7 @@ public class EdgeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
+        startActivity(new Intent(this, MenuActivity.class));
         finish();
     }
 }

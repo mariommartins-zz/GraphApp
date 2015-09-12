@@ -181,7 +181,7 @@ public class WarshallActivity extends AppCompatActivity implements View.OnClickL
             setContentView(R.layout.activity_warshall);
 
         initMatrix();
-            displayFWMatrix();
+        displayFWMatrix();
 
         Intent i1 = getIntent();
         title = i1.getStringExtra("title");

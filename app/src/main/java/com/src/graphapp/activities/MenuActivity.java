@@ -15,14 +15,12 @@ import android.widget.Toast;
 
 import com.src.graphapp.Controller;
 import com.src.graphapp.R;
-import com.src.graphapp.structures.Graph;
 import com.src.graphapp.texts.TextsEN;
 
 public class MenuActivity extends Activity implements View.OnClickListener {
 
     ListView lvMenu;
     Button bHelp;
-    Graph graph;
 
     int controllerLog, previous;
 
@@ -53,7 +51,6 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                     Toast.makeText(this, TextsEN.getErrorByPosition(6), Toast.LENGTH_LONG).show();
                     break;
             }
-            graph = Controller.getGraph();
         }
 
         super.onCreate(savedInstanceState);
@@ -71,30 +68,32 @@ public class MenuActivity extends Activity implements View.OnClickListener {
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
 
-                graph.cleanVisitedEdge();
-                graph.cleanVisitedVertex();
+                Controller.getGraph().cleanVisitedVertex();
+                Controller.getGraph().cleanVisitedEdge();
 
                 switch (position){
-                    case 0:
+                    case 0: //OK
                         startActivity(new Intent(getApplicationContext(), VertexActivity.class));
+                        finish();
                         break;
-                    case 1:
-                        startActivity(new Intent(getApplicationContext(),EdgeActivity.class));
+                    case 1: //OK
+                        startActivity(new Intent(getApplicationContext(), EdgeActivity.class));
+                        finish();
                         break;
-                    case 2:
+                    case 2: //OK
                         Intent i2 = new Intent(getApplicationContext(), GraphActivity.class);
                         i2.putExtra("title", TextsEN.getMenuByPosition(2));
-                        i2.putExtra("graph",graph.printGraph());
-                        i2.putExtra("description","hide");
-                        i2.putExtra("complexity",TextsEN.getComplexityByPosition(0));
+                        i2.putExtra("algorithm", 2);
+                        i2.putExtra("description","");
+                        i2.putExtra("complexity", "");
                         startActivity(i2);
                         break;
                     case 3:
                         Intent i3 = new Intent(getApplicationContext(), GraphActivity.class);
                         i3.putExtra("title", TextsEN.getMenuByPosition(3));
-                        i3.putExtra("graph", graph.kruskal().printGraph());
+                        i3.putExtra("algorithm", 3);
                         i3.putExtra("description",TextsEN.getDescriptionByPosition(0));
-                        i3.putExtra("complexity",TextsEN.getComplexityByPosition(0));
+                        i3.putExtra("complexity", TextsEN.getComplexityByPosition(0));
                         startActivity(i3);
                         break;
                     case 4:
@@ -105,7 +104,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                         i4.putExtra("complexity", TextsEN.getComplexityByPosition(1));
                         startActivity(i4);
                         break;
-                    case 5:
+                    case 5: //OK
                         Intent i5 = new Intent(getApplicationContext(), InputActivity.class);
                         i5.putExtra("algorithm", 5);
                         i5.putExtra("title", TextsEN.getMenuByPosition(5));
@@ -113,7 +112,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                         i5.putExtra("complexity", TextsEN.getComplexityByPosition(2));
                         startActivity(i5);
                         break;
-                    case 6:
+                    case 6: //OK
                         Intent i6 = new Intent(getApplicationContext(), InputActivity.class);
                         i6.putExtra("algorithm", 6);
                         i6.putExtra("title", TextsEN.getMenuByPosition(6));
@@ -121,23 +120,22 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                         i6.putExtra("complexity", TextsEN.getComplexityByPosition(3));
                         startActivity(i6);
                         break;
-                    case 7:
+                    case 7: //OK
                         Intent i7 = new Intent(getApplicationContext(), TopSortActivity.class);
                         i7.putExtra("title", TextsEN.getMenuByPosition(7));
                         i7.putExtra("description",TextsEN.getDescriptionByPosition(4));
                         i7.putExtra("complexity", TextsEN.getComplexityByPosition(4));
                         startActivity(i7);
                         break;
-                    case 8:
+                    case 8: //OK
                         Intent i8 = new Intent(getApplicationContext(), GraphActivity.class);
                         i8.putExtra("algorithm", 8);
                         i8.putExtra("title", TextsEN.getMenuByPosition(8));
-                        i8.putExtra("graph", graph.transitiveClosure().printGraph());
                         i8.putExtra("description",TextsEN.getDescriptionByPosition(5));
                         i8.putExtra("complexity", TextsEN.getComplexityByPosition(5));
                         startActivity(i8);
                         break;
-                    case 9:
+                    case 9: //OK
                         Intent i9 = new Intent(getApplicationContext(), WarshallActivity.class);
                         i9.putExtra("title", TextsEN.getMenuByPosition(9));
                         i9.putExtra("description",TextsEN.getDescriptionByPosition(6));
@@ -145,6 +143,9 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                         startActivity(i9);
                         break;
                     case 10:
+                        startActivity(new Intent(getApplicationContext(),ReferenceActivity.class));
+                        break;
+                    case 11: //OK
                         startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         Controller.destroy();
                         finish();
@@ -195,6 +196,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             Controller.destroy();
+            System.exit(0);
             finish();
             return;
         }
